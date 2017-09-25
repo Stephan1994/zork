@@ -1,0 +1,17 @@
+#compiled object files of c++
+*.o
+
+#user files of qt
+*.pro.user
+
+# Generated MOC, resource and UI files
+# (need this later eventually)
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+
+#built windows .exe
+*.exe
+
+#any temporary files
+*~
