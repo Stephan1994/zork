@@ -12,6 +12,15 @@ moc_*.h
 qrc_*.cpp
 ui_*.h
 
+#ignore build directories
+debug/
+release/
+
+#generated makefiles
+Makefile*
+/.qmake.cache
+/.qmake.stash
+
 #built windows .exe
 *.exe
 
