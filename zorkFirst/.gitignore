@@ -3,10 +3,12 @@
 
 #user files of qt
 *.pro.user
+*.pro.user.*
 
 # Generated MOC, resource and UI files
 # (need this later eventually)
 moc_*.cpp
+moc_*.h
 qrc_*.cpp
 ui_*.h
 
