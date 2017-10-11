@@ -16,6 +16,9 @@ ui_*.h
 debug/
 release/
 
+*.Debug
+*.Release
+
 #generated makefiles
 Makefile*
 /.qmake.cache
