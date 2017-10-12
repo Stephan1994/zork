@@ -32,7 +32,9 @@ SOURCES += \
     item.cpp \
     Parser.cpp \
     Room.cpp \
-    ZorkUL.cpp
+    ZorkUL.cpp \
+    mapwidget.cpp \
+    roompainter.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +44,11 @@ HEADERS += \
     item.h \
     Parser.h \
     Room.h \
-    ZorkUL.h
+    ZorkUL.h \
+    mapwidget.h \
+    roompainter.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    mapwidget.ui \
+    roompainter.ui
