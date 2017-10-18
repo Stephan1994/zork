@@ -18,6 +18,7 @@ private:
 
 public:
     int numberOfItems();
+    int posRow, posCol;
     map<string, Room*> exits;
 	Room(string description);
 	void setExits(Room *north, Room *east, Room *south, Room *west);

@@ -22,8 +22,8 @@ public:
 private:
     //Ui::MapWidget *ui;
     QGridLayout *mainGrid;
-    RoomPainter paintedRooms[9];
-    void createRooms(Room rooms[9]);
+    //RoomPainter paintedRooms[9];
+    RoomPainter* createRooms(Room rooms[9]);
 
 
 };

@@ -26,41 +26,6 @@
     <layout class="QGridLayout" name="MainLayout">
      <item row="0" column="0">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="2" column="1">
-        <widget class="QPushButton" name="teleportButton">
-         <property name="text">
-          <string>Teleport</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="northButton">
-         <property name="text">
-          <string>Go north</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="westButton">
-         <property name="text">
-          <string>Go west</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QPushButton" name="southButton">
-         <property name="text">
-          <string>Go south</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="eastButton">
-         <property name="text">
-          <string>Go east</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="outputLabel">
          <property name="minimumSize">
@@ -99,8 +64,40 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="3" rowspan="3">
-        <widget class="QWidget" name="widget" native="true"/>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="westButton">
+         <property name="text">
+          <string>Go west</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="teleportButton">
+         <property name="text">
+          <string>Teleport</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="northButton">
+         <property name="text">
+          <string>Go north</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="southButton">
+         <property name="text">
+          <string>Go south</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="eastButton">
+         <property name="text">
+          <string>Go east</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

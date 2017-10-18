@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     zork->play();
     updateOutputLabel(zork->guiOutput);
     map = new MapWidget(zork);
+    ui->gridLayout_2->addWidget(map, 1, 3, 3, 1);
 }
 
 MainWindow::~MainWindow()

@@ -14,6 +14,7 @@ class RoomPainter : public QWidget
 
 public:
     RoomPainter(QWidget *parent, Room *roomToPaint);
+    RoomPainter(QWidget *parent = 0);
     ~RoomPainter();
 
 protected:
