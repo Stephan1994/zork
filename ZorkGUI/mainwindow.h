@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "ZorkUL.h"
+#include "mapwidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,7 +30,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    ZorkUL zork;
+    ZorkUL *zork;
+    MapWidget *map;
     void updateOutputLabel(string out);
 };
 

@@ -1,21 +1,28 @@
 #include "mapwidget.h"
 #include "ui_mapwidget.h"
-#include <QGridLayout>
+#include "roompainter.h"
 
-MapWidget::MapWidget(QWidget *parent) :
+MapWidget::MapWidget(ZorkUL *zork, QWidget *parent) :
     QWidget(parent)
 {
     //ui->setupUi(this);
-    mainGrid = new QGridLayout;
+    mainGrid = new QGridLayout();
 
 
-}
-
-MapWidget::paintEvent(QPaintEvent *e)
-{
+    //RoomPainter roomSouth = new RoomPainter(this,)
 
 }
+
 MapWidget::~MapWidget()
 {
     //delete ui;
+    delete mainGrid;
+}
+
+void MapWidget::createRooms(Room rooms[9])
+{
+    for (int i = 0; i < 9; i++)
+    {
+        //paintedRooms[i] = RoomPainter(this, )
+    }
 }

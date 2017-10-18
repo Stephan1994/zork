@@ -12,13 +12,13 @@ class Room {
 
 private:
 	string description;
-	map<string, Room*> exits;
 	string exitString();
     vector <Item> itemsInRoom;
 
 
 public:
     int numberOfItems();
+    map<string, Room*> exits;
 	Room(string description);
 	void setExits(Room *north, Room *east, Room *south, Room *west);
 	string shortDescription();

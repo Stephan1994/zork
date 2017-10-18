@@ -2,6 +2,10 @@
 #define MAPWIDGET_H
 
 #include <QWidget>
+#include <QGridLayout>
+
+#include "ZorkUL.h"
+#include "roompainter.h"
 
 namespace Ui {
 class MapWidget;
@@ -12,15 +16,14 @@ class MapWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MapWidget(QWidget *parent = 0);
+    explicit MapWidget(ZorkUL *zork, QWidget *parent = 0 );
     ~MapWidget();
-
-protected:
-    void paintEvent(QPaintEvent *e);
 
 private:
     //Ui::MapWidget *ui;
     QGridLayout *mainGrid;
+    RoomPainter paintedRooms[9];
+    void createRooms(Room rooms[9]);
 
 
 };
