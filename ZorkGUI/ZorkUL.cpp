@@ -24,6 +24,8 @@ void ZorkUL::createRooms()  {
         for (int j=0; j<50; j++)
         {
             rooms[i][j] = new Room(to_string(i)+ "," + to_string(j));
+            rooms[i][j]->posRow = i;
+            rooms[i][j]->posCol = j;
             //TODO: add items, enemies
         }
     }
@@ -36,11 +38,14 @@ void ZorkUL::createRooms()  {
             Room *exitsArray[4];
             int falseCounter;
             do{
-                falseCounter = 0;
+                falseCounter = - rooms[i][j]->exits.size();
                 for (int k=0; k<4; k++)
                 {
                     if (rand() % 2 == 0)
+                    {
                         falseCounter++;
+                        exitsArray[k] = NULL;
+                    }
                     else //set room as exit or NULL if at the edge
                     {
                         if (k == 0){
@@ -80,6 +85,26 @@ void ZorkUL::createRooms()  {
             } while (falseCounter == 4); //repeat if there's no door
 
             rooms[i][j]->setExits(exitsArray[0], exitsArray[1], exitsArray[2], exitsArray[3]);
+
+            //add the backdoors for the connected rooms
+            for (int k = 0; k < 4; k++)
+            {
+                if (exitsArray[k] != NULL)
+                {
+                    if (k == 0){
+                        exitsArray[k]->setExits(NULL,NULL,rooms[i][j],NULL);
+                    }
+                    else if (k == 1){
+                        exitsArray[k]->setExits(NULL,NULL,NULL,rooms[i][j]);
+                    }
+                    else if (k == 2){
+                        exitsArray[k]->setExits(rooms[i][j],NULL,NULL,NULL);
+                    }
+                    else if (k == 3){
+                        exitsArray[k]->setExits(NULL,rooms[i][j],NULL,NULL);
+                    }
+                }
+            }
         }
     }
     /*

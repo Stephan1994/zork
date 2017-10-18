@@ -13,8 +13,6 @@ using namespace std;
 class ZorkUL {
 private:
 	Parser parser;
-    Room *rooms[50][50];
-	Room *currentRoom;
 	void createRooms();
 	void printWelcome();
 	bool processCommand(Command command);
@@ -26,6 +24,8 @@ private:
 
 public:
     string guiOutput;
+    Room *currentRoom;
+    Room *rooms[50][50];
 	ZorkUL();
 	void play();
 	string go(string direction);
