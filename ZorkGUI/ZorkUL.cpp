@@ -16,8 +16,73 @@ ZorkUL::ZorkUL() {
 }
 
 void ZorkUL::createRooms()  {
-    Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
+    //Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
 
+    //creating rooms
+    for (int i=0; i<50; i++)
+    {
+        for (int j=0; j<50; j++)
+        {
+            rooms[i][j] = new Room(to_string(i)+ "," + to_string(j));
+            //TODO: add items, enemies
+        }
+    }
+
+    //setting exits for rooms
+    for (int i=0; i<50; i++)
+    {
+        for (int j=0; j<50; j++)
+        {
+            Room *exitsArray[4];
+            int falseCounter;
+            do{
+                falseCounter = 0;
+                for (int k=0; k<4; k++)
+                {
+                    if (rand() % 2 == 0)
+                        falseCounter++;
+                    else //set room as exit or NULL if at the edge
+                    {
+                        if (k == 0){
+                            if (i-1 >= 0)
+                                exitsArray[k] = rooms[i-1][j];
+                            else{
+                                exitsArray[k] = NULL;
+                                falseCounter++;
+                            }
+                        }
+                        else if (k == 1){
+                            if (j+1 < 50)
+                                exitsArray[k] = rooms[i][j+1];
+                            else{
+                                exitsArray[k] = NULL;
+                                falseCounter++;
+                            }
+                        }
+                        else if (k == 2){
+                            if (i+1 < 50)
+                                exitsArray[k] = rooms[i+1][j];
+                            else{
+                                exitsArray[k] = NULL;
+                                falseCounter++;
+                            }
+                        }
+                        else if (k == 3){
+                            if (j-1 >= 0)
+                                exitsArray[k] = rooms[i][j-1];
+                            else{
+                                exitsArray[k] = NULL;
+                                falseCounter++;
+                            }
+                        }
+                    }
+                }
+            } while (falseCounter == 4); //repeat if there's no door
+
+            rooms[i][j]->setExits(exitsArray[0], exitsArray[1], exitsArray[2], exitsArray[3]);
+        }
+    }
+    /*
 	a = new Room("a");
         a->addItem(new Item("x", 1, 11));
         a->addItem(new Item("y", 2, 22));
@@ -54,7 +119,10 @@ void ZorkUL::createRooms()  {
 	h->setExits(NULL, f, NULL, NULL);
     i->setExits(NULL, d, NULL, NULL);
     j->setExits(d, NULL, NULL, NULL);
-    currentRoom = a;
+    */
+    int randI = rand() % 50;
+    int randJ = rand() % 50;
+    currentRoom = rooms[randI][randJ];
 }
 
 /**
@@ -220,17 +288,18 @@ void ZorkUL::teleport(Command com){
 
     string room = com.getSecondWord();
     if (room.compare("rand") == 0){
-        unsigned int roomSize = rooms.size();
-        unsigned int randRoom = rand() % roomSize;
-        currentRoom = rooms[randRoom];
+        //unsigned int roomSize = rooms.size();
+        unsigned int randRoomI = rand() % 50;
+        unsigned int randRoomJ = rand() % 50;
+        currentRoom = rooms[randRoomI][randRoomJ];
     }
-    else{
+   /* else{
         for (unsigned int i = 0; i < rooms.size(); i++)
         {
             if (rooms[i]->shortDescription().compare(room) == 0)
                 currentRoom = rooms[i];
         }
-    }
+    }*/
    guiOutput = currentRoom->longDescription();
    guiOutput += "\n";
 }
