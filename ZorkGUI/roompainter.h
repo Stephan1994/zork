@@ -13,7 +13,7 @@ class RoomPainter : public QWidget
     Q_OBJECT
 
 public:
-    RoomPainter(QWidget *parent, Room *roomToPaint);
+    RoomPainter(Room *roomToPaint, double zoom, QWidget *parent = 0);
     RoomPainter(QWidget *parent = 0);
     ~RoomPainter();
 
@@ -22,6 +22,7 @@ protected:
 private:
     //Ui::RoomPainter *ui;
     Room *room;
+    double scale;
 };
 
 #endif // ROOMPAINTER_H

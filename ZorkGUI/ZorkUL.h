@@ -17,7 +17,6 @@ private:
 	void printWelcome();
 	bool processCommand(Command command);
 	void printHelp();
-
     void createItems();
     void displayItems();
 
@@ -26,7 +25,9 @@ public:
     string guiOutput;
     Room *currentRoom;
     Room *rooms[50][50];
-	ZorkUL();
+    int maxRoomsRow;
+    int maxRoomsCol;
+    ZorkUL(int roomsRow, int roomsCol);
 	void play();
 	string go(string direction);
     void teleport(Command com);

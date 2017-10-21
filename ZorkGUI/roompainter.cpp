@@ -5,31 +5,37 @@
 #include <QPoint>
 #include <QPen>
 
-RoomPainter::RoomPainter(QWidget *parent, Room *roomToPaint) :
+RoomPainter::RoomPainter(QWidget *parent):
+    QWidget(parent)
+{
+
+}
+RoomPainter::RoomPainter(Room *roomToPaint, double zoom, QWidget *parent) :
     QWidget(parent)
 {
     //ui->setupUi(this);
     room = roomToPaint;
+    scale = zoom;
 }
 
 void RoomPainter::paintEvent(QPaintEvent *e)
 {
     QPainter painter( this );
     painter.setRenderHint( QPainter::Antialiasing, true );
-    painter.setPen( QPen( Qt::black, 10 ) );
+    painter.setPen( QPen( Qt::black, 2*scale ) );
     QPoint p[4] = {
-        QPoint(5, 5), //northwest
-        QPoint(this->width() - 5, 5), //northeast
-        QPoint(this->width() - 5, this->height() - 5), //southeast
-        QPoint(5, this->height() - 5) //southwest
+        QPoint(5*scale, 5*scale), //northwest
+        QPoint((100 - 5)*scale, 5*scale), //northeast
+        QPoint((100 - 5)*scale, (100 - 5)*scale), //southeast
+        QPoint(5*scale, (100 - 5)*scale) //southwest
     };
 
     //draw northern wall and door if necessary
     if (room->exits.find("north") != room->exits.end())
     {
-        int doorPos = rand() % this->width();
-        QPoint leftDoor = QPoint(doorPos, 5);
-        QPoint rightDoor = QPoint(doorPos + this->width()/6, 5);
+        int doorPos = rand() % (int)(100*scale);
+        QPoint leftDoor = QPoint(doorPos, 5*scale);
+        QPoint rightDoor = QPoint(doorPos + (100/6)*scale, 5*scale);
         painter.drawLine( p[0], leftDoor );
         painter.drawLine( rightDoor, p[1] );
     }
@@ -39,9 +45,9 @@ void RoomPainter::paintEvent(QPaintEvent *e)
     //draw southern wall and door if necessary
     if (room->exits.find("south") != room->exits.end())
     {
-        int doorPos = rand() % this->width();
-        QPoint leftDoor = QPoint(doorPos, this->height() - 5);
-        QPoint rightDoor = QPoint(doorPos + this->width()/6, this->height() - 5);
+        int doorPos = rand() % (int)100*scale;
+        QPoint leftDoor = QPoint(doorPos, (100 - 5)*scale);
+        QPoint rightDoor = QPoint(doorPos + (100/6)*scale, (100 - 5)*scale);
         painter.drawLine( p[3], leftDoor );
         painter.drawLine( rightDoor, p[2] );
     }
@@ -51,9 +57,9 @@ void RoomPainter::paintEvent(QPaintEvent *e)
     //draw western wall and door if necessary
     if (room->exits.find("west") != room->exits.end())
     {
-        int doorPos = rand() % this->height();
-        QPoint highDoor = QPoint(5, doorPos);
-        QPoint downDoor = QPoint(5, doorPos + this->height()/6);
+        int doorPos = rand() % (int)100*scale;
+        QPoint highDoor = QPoint(5*scale, doorPos);
+        QPoint downDoor = QPoint(5*scale, doorPos + (100/6)*scale);
         painter.drawLine( p[0], highDoor );
         painter.drawLine( downDoor, p[3] );
     }
@@ -63,9 +69,9 @@ void RoomPainter::paintEvent(QPaintEvent *e)
     //draw eastern wall and door if necessary
     if (room->exits.find("east") != room->exits.end())
     {
-        int doorPos = rand() % this->height();
-        QPoint highDoor = QPoint(this->width() - 5, doorPos);
-        QPoint downDoor = QPoint(this->width() - 5, doorPos + this->height()/6);
+        int doorPos = rand() % (int)100*scale;
+        QPoint highDoor = QPoint((100 - 5)*scale, doorPos);
+        QPoint downDoor = QPoint((100 - 5)*scale, doorPos + (100/6)*scale);
         painter.drawLine( p[1], highDoor );
         painter.drawLine( downDoor, p[2] );
     }

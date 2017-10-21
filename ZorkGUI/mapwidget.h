@@ -5,7 +5,6 @@
 #include <QGridLayout>
 
 #include "ZorkUL.h"
-#include "roompainter.h"
 
 namespace Ui {
 class MapWidget;
@@ -16,16 +15,18 @@ class MapWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MapWidget(ZorkUL *zork, QWidget *parent = 0 );
+    explicit MapWidget(ZorkUL *zork, int VisibilityRange = 1, QWidget *parent = 0 );
     ~MapWidget();
+    void changeRooms(ZorkUL *zork, int visibilityRange);
 
+protected:
+    void paintEvent(QPaintEvent *e);
 private:
     //Ui::MapWidget *ui;
     QGridLayout *mainGrid;
-    //RoomPainter paintedRooms[9];
-    RoomPainter* createRooms(Room rooms[9]);
-
-
+    vector<vector<Room*>> rooms;
+    int visibilityRange;
+    //void createRooms(Room *rooms[9], RoomPainter *paintedRooms[9]);
 };
 
 #endif // MAPWIDGET_H

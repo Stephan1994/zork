@@ -11,7 +11,9 @@ using namespace std;
 	return 0;
 }*/
 
-ZorkUL::ZorkUL() {
+ZorkUL::ZorkUL(int roomsRow, int roomsCol) {
+    maxRoomsRow = roomsRow;
+    maxRoomsCol = roomsCol;
 	createRooms();
 }
 
@@ -19,9 +21,9 @@ void ZorkUL::createRooms()  {
     //Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
 
     //creating rooms
-    for (int i=0; i<50; i++)
+    for (int i=0; i<maxRoomsRow; i++)
     {
-        for (int j=0; j<50; j++)
+        for (int j=0; j<maxRoomsCol; j++)
         {
             rooms[i][j] = new Room(to_string(i)+ "," + to_string(j));
             rooms[i][j]->posRow = i;
@@ -31,9 +33,9 @@ void ZorkUL::createRooms()  {
     }
 
     //setting exits for rooms
-    for (int i=0; i<50; i++)
+    for (int i=0; i<maxRoomsRow; i++)
     {
-        for (int j=0; j<50; j++)
+        for (int j=0; j<maxRoomsCol; j++)
         {
             Room *exitsArray[4];
             int falseCounter;
@@ -57,7 +59,7 @@ void ZorkUL::createRooms()  {
                             }
                         }
                         else if (k == 1){
-                            if (j+1 < 50)
+                            if (j+1 < maxRoomsCol)
                                 exitsArray[k] = rooms[i][j+1];
                             else{
                                 exitsArray[k] = NULL;
@@ -65,7 +67,7 @@ void ZorkUL::createRooms()  {
                             }
                         }
                         else if (k == 2){
-                            if (i+1 < 50)
+                            if (i+1 < maxRoomsRow)
                                 exitsArray[k] = rooms[i+1][j];
                             else{
                                 exitsArray[k] = NULL;
@@ -145,8 +147,8 @@ void ZorkUL::createRooms()  {
     i->setExits(NULL, d, NULL, NULL);
     j->setExits(d, NULL, NULL, NULL);
     */
-    int randI = rand() % 50;
-    int randJ = rand() % 50;
+    int randI = rand() % maxRoomsRow;
+    int randJ = rand() % maxRoomsCol;
     currentRoom = rooms[randI][randJ];
 }
 

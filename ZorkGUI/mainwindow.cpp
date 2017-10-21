@@ -9,11 +9,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     //connect(temp, SIGNAL(outputChanged(QString)), ui->outputLabel, SLOT(setText(QString)));
     //ui->outputLabel->setText(QString::fromStdString(temp.guiOutput));
-    zork = new ZorkUL();
+    zork = new ZorkUL(50,50);
     zork->play();
     updateOutputLabel(zork->guiOutput);
-    map = new MapWidget(zork);
-    ui->gridLayout_2->addWidget(map, 1, 3, 3, 1);
+    map = new MapWidget(zork, 1);
+    map->setMinimumSize(150,150);
+    ui->gridLayout_2->addWidget(map, 1, 3, 4, 1);
 }
 
 MainWindow::~MainWindow()
@@ -26,6 +27,7 @@ void MainWindow::on_teleportButton_clicked()
     Command* command = new Command("teleport", "rand");
     zork->teleport(*command);
     updateOutputLabel(zork->guiOutput);
+    map->changeRooms(zork, 1);
     delete command;
 }
 
@@ -40,6 +42,7 @@ void MainWindow::on_northButton_clicked()
     zork->goRoom(*command);
     if (zork->guiOutput.compare("underdefined input\n") != 0)
         updateOutputLabel(zork->guiOutput);
+    map->changeRooms(zork, 1);
     delete command;
 }
 
@@ -49,6 +52,7 @@ void MainWindow::on_eastButton_clicked()
     zork->goRoom(*command);
     if (zork->guiOutput.compare("underdefined input\n") != 0)
         updateOutputLabel(zork->guiOutput);
+    map->changeRooms(zork, 1);
     delete command;
 }
 
@@ -58,6 +62,7 @@ void MainWindow::on_southButton_clicked()
     zork->goRoom(*command);
     if (zork->guiOutput.compare("underdefined input\n") != 0)
         updateOutputLabel(zork->guiOutput);
+    map->changeRooms(zork, 1);
     delete command;
 }
 
@@ -67,5 +72,6 @@ void MainWindow::on_westButton_clicked()
     zork->goRoom(*command);
     if (zork->guiOutput.compare("underdefined input\n") != 0)
         updateOutputLabel(zork->guiOutput);
+    map->changeRooms(zork, 1);
     delete command;
 }
