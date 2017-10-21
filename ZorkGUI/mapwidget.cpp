@@ -8,24 +8,8 @@
 MapWidget::MapWidget(ZorkUL *zork, int visRange, QWidget *parent) :
     QWidget(parent)
 {
-    //ui->setupUi(this);
-    //mainGrid = new QGridLayout();
 
     changeRooms(zork, visRange);
-
-    //vector<RoomPainter*> paintedRooms = createRooms(rooms, paintedRooms);
-
-    //mainGrid->addWidget(paintedRooms[0], 1,1);
-
- /*   c = 0;
-    for (int row = rowStart; row < rowEnd; row++)
-    {
-        for (int col = colStart; col < colEnd; col++)
-        {
-            mainGrid->addWidget(paintedRooms[c], row, col);
-            c++;
-        }
-    }*/
 }
 
 void MapWidget::changeRooms(ZorkUL *zork, int visRange)
@@ -73,19 +57,21 @@ void MapWidget::paintEvent(QPaintEvent *e)
     painter.setRenderHint( QPainter::Antialiasing, true );
     painter.setPen( QPen( Qt::black, 2 ) );
 
+    QRect backgroundRect = QRect(0,0,rect().width(),rect().width());
+    painter.drawImage(backgroundRect, QImage("scroll.png"));
     //number of rooms in width and height, that should be printed by map
     int nrOfRooms = 2 * visibilityRange + 1;
 
     int rowOffset, colOffset;
-    int roomLength = rect().width()/nrOfRooms;
+    int roomLength = (rect().width() - (((rect().width()/nrOfRooms) / 3) * 2))/nrOfRooms;
     for (int row = 0; row < nrOfRooms; row++)
     {
-        rowOffset = roomLength * row;
+        rowOffset = (roomLength * row) + ((rect().width()/nrOfRooms) / 3);
         for (int col = 0; col < nrOfRooms; col++)
         {
             if (rooms[row][col] != NULL)
             {
-                colOffset = roomLength * col;
+                colOffset = roomLength * col + ((rect().width()/nrOfRooms) / 3);
                 QPoint p[4] = {
                     QPoint(0 + colOffset, 0 + rowOffset), //northwest
                     QPoint(roomLength + colOffset, 0 + rowOffset), //northeast
@@ -98,15 +84,21 @@ void MapWidget::paintEvent(QPaintEvent *e)
                     int playerPosX = p[0].x() + (roomLength / 2) - (roomLength / 12);
                     int playerPosY = p[0].y() + (roomLength / 2) - (roomLength / 12);
                     QRect playerRect = QRect(playerPosX, playerPosY, roomLength / 6, roomLength / 6);
-                    QImage playerImg = QImage("player.png");
-                    painter.drawImage(playerRect, playerImg);
+
+                    painter.setBrush( QBrush( Qt::red ) );
+                    painter.setPen( Qt::NoPen );
+                    painter.drawEllipse(playerRect);
+                    painter.setBrush( Qt::NoBrush );
+                    painter.setPen( QPen( Qt::black, 2 ) );
+                    //QImage playerImg = QImage("player.png");
+                    //painter.drawImage(playerRect, playerImg);
                 }
 
                 int doorPos;
                 //draw northern wall and door if necessary
                 if (rooms[row][col]->exits.find("north") != rooms[row][col]->exits.end())
                 {
-                    doorPos = p[0].x() + (roomLength / 2) - (roomLength / 12) ;
+                    doorPos = p[0].x() + get<1>(rooms[row][col]->exits.find("north")->second) % (roomLength - (roomLength / 6));//(roomLength / 2) - (roomLength / 12) ;
 
                     QPoint leftDoor = QPoint(doorPos, 0 + rowOffset);
                     QPoint rightDoor = QPoint(doorPos + (roomLength / 6), 0 + rowOffset);
@@ -119,7 +111,7 @@ void MapWidget::paintEvent(QPaintEvent *e)
                 //draw southern wall and door if necessary
                 if (rooms[row][col]->exits.find("south") != rooms[row][col]->exits.end())
                 {
-                    doorPos = p[3].x() + (roomLength / 2) - (roomLength / 12) ;
+                    doorPos = p[3].x() + get<1>(rooms[row][col]->exits.find("south")->second) % (roomLength - (roomLength / 6));
                     QPoint leftDoor = QPoint(doorPos, roomLength + rowOffset);
                     QPoint rightDoor = QPoint(doorPos + (roomLength / 6), roomLength + rowOffset);
                     painter.drawLine( p[3], leftDoor );
@@ -131,7 +123,7 @@ void MapWidget::paintEvent(QPaintEvent *e)
                 //draw western wall and door if necessary
                 if (rooms[row][col]->exits.find("west") != rooms[row][col]->exits.end())
                 {
-                    doorPos = p[0].y() + (roomLength / 2) - (roomLength / 12) ;
+                    doorPos = p[0].y() + get<1>(rooms[row][col]->exits.find("west")->second) % (roomLength - (roomLength / 6));
                     QPoint highDoor = QPoint(0 + colOffset, doorPos);
                     QPoint downDoor = QPoint(0 + colOffset, doorPos + (roomLength / 6));
                     painter.drawLine( p[0], highDoor );
@@ -143,7 +135,7 @@ void MapWidget::paintEvent(QPaintEvent *e)
                 //draw eastern wall and door if necessary
                 if (rooms[row][col]->exits.find("east") != rooms[row][col]->exits.end())
                 {
-                    doorPos = p[1].y() + (roomLength / 2) - (roomLength / 12) ;
+                    doorPos = p[1].y() + get<1>(rooms[row][col]->exits.find("east")->second) % (roomLength - (roomLength / 6));
                     QPoint highDoor = QPoint(roomLength + colOffset, doorPos);
                     QPoint downDoor = QPoint(roomLength + colOffset, doorPos + (roomLength / 6));
                     painter.drawLine( p[1], highDoor );
@@ -155,16 +147,4 @@ void MapWidget::paintEvent(QPaintEvent *e)
         }
     }
 }
-/*
-void MapWidget::createRooms(Room *rooms[9], RoomPainter *paintedRooms[9])
-{
-    for (int i = 0; i < 9; i++)
-    {
-        if (rooms[i] != NULL)
-        {
-            double zoom = 0.5;
-            paintedRooms[i] = new RoomPainter(rooms[i], zoom);
-            paintedRooms[i]->setMinimumSize(110*zoom, 110*zoom);
-        }
-    }
-}*/
+

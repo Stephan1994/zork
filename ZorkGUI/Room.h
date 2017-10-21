@@ -19,9 +19,9 @@ private:
 public:
     int numberOfItems();
     int posRow, posCol;
-    map<string, Room*> exits;
+    map<string, std::tuple<Room*, int>> exits;
 	Room(string description);
-	void setExits(Room *north, Room *east, Room *south, Room *west);
+    void setExits(Room *north, int northDoor, Room *east, int eastDoor, Room *south, int southDoor, Room *west, int westDoor);
 	string shortDescription();
 	string longDescription();
 	Room* nextRoom(string direction);

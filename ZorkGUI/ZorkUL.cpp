@@ -43,6 +43,7 @@ void ZorkUL::createRooms()  {
                 falseCounter = - rooms[i][j]->exits.size();
                 for (int k=0; k<4; k++)
                 {
+                    //doors are randomly generated
                     if (rand() % 2 == 0)
                     {
                         falseCounter++;
@@ -50,32 +51,36 @@ void ZorkUL::createRooms()  {
                     }
                     else //set room as exit or NULL if at the edge
                     {
+                        //north
                         if (k == 0){
-                            if (i-1 >= 0)
+                            if (i-1 >= 0 && rooms[i][j]->exits.find("north") == rooms[i][j]->exits.end())
                                 exitsArray[k] = rooms[i-1][j];
                             else{
                                 exitsArray[k] = NULL;
                                 falseCounter++;
                             }
                         }
+                        //east
                         else if (k == 1){
-                            if (j+1 < maxRoomsCol)
+                            if (j+1 < maxRoomsCol && rooms[i][j]->exits.find("east") == rooms[i][j]->exits.end())
                                 exitsArray[k] = rooms[i][j+1];
                             else{
                                 exitsArray[k] = NULL;
                                 falseCounter++;
                             }
                         }
+                        //south
                         else if (k == 2){
-                            if (i+1 < maxRoomsRow)
+                            if (i+1 < maxRoomsRow && rooms[i][j]->exits.find("south") == rooms[i][j]->exits.end())
                                 exitsArray[k] = rooms[i+1][j];
                             else{
                                 exitsArray[k] = NULL;
                                 falseCounter++;
                             }
                         }
+                        //west
                         else if (k == 3){
-                            if (j-1 >= 0)
+                            if (j-1 >= 0 && rooms[i][j]->exits.find("west") == rooms[i][j]->exits.end())
                                 exitsArray[k] = rooms[i][j-1];
                             else{
                                 exitsArray[k] = NULL;
@@ -86,24 +91,29 @@ void ZorkUL::createRooms()  {
                 }
             } while (falseCounter == 4); //repeat if there's no door
 
-            rooms[i][j]->setExits(exitsArray[0], exitsArray[1], exitsArray[2], exitsArray[3]);
+            int randDoors[4] = {rand(), rand(), rand(), rand()};
+            rooms[i][j]->setExits(exitsArray[0], randDoors[0], exitsArray[1], randDoors[1], exitsArray[2], randDoors[2], exitsArray[3], randDoors[3]);
 
             //add the backdoors for the connected rooms
             for (int k = 0; k < 4; k++)
             {
                 if (exitsArray[k] != NULL)
                 {
+                    //north
                     if (k == 0){
-                        exitsArray[k]->setExits(NULL,NULL,rooms[i][j],NULL);
+                        exitsArray[k]->setExits(NULL,0,NULL,0,rooms[i][j],randDoors[0],NULL,0);
                     }
+                    //east
                     else if (k == 1){
-                        exitsArray[k]->setExits(NULL,NULL,NULL,rooms[i][j]);
+                        exitsArray[k]->setExits(NULL,0,NULL,0,NULL,0,rooms[i][j],randDoors[1]);
                     }
+                    //south
                     else if (k == 2){
-                        exitsArray[k]->setExits(rooms[i][j],NULL,NULL,NULL);
+                        exitsArray[k]->setExits(rooms[i][j],randDoors[2],NULL,0,NULL,0,NULL,0);
                     }
+                    //west
                     else if (k == 3){
-                        exitsArray[k]->setExits(NULL,rooms[i][j],NULL,NULL);
+                        exitsArray[k]->setExits(NULL,0,rooms[i][j],randDoors[3],NULL,0,NULL,0);
                     }
                 }
             }
