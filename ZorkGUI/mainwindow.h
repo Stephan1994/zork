@@ -28,11 +28,14 @@ private slots:
 
     void on_westButton_clicked();
 
+    void on_takeItemButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     ZorkUL *zork;
     MapWidget *map;
     void updateOutputLabel(string out);
+    void roomChanged();
 };
 
 #endif // MAINWINDOW_H

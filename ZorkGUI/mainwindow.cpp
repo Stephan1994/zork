@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "Command.h"
 #include "ui_mainwindow.h"
+#include <QImage>
+#include <QPixmap>
+#include <QString>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,15 +37,36 @@ void MainWindow::on_teleportButton_clicked()
 void MainWindow::updateOutputLabel(string out)
 {
     ui->storyText->setText(QString::fromStdString(out));
+    if (!zork->currentRoom->itemsInRoom.empty())
+    {
+        QImage *itemPic = new QImage(QString::fromStdString(zork->currentRoom->itemsInRoom.front().getPicturePath()));
+        ui->storyPic->setPixmap(QPixmap::fromImage(*itemPic));
+    }
+}
+
+void MainWindow::roomChanged()
+{
+    if (zork->guiOutput.compare("underdefined input\n") != 0)
+        updateOutputLabel(zork->guiOutput);
+    map->changeRooms(zork, 1);
+    if(!zork->currentRoom->itemsInRoom.empty())
+    {
+        ui->takeItemButton->show();
+    }
+    else
+    {
+        ui->takeItemButton->hide();
+    }
 }
 
 void MainWindow::on_northButton_clicked()
 {
     Command* command = new Command("go", "north");
     zork->goRoom(*command);
-    if (zork->guiOutput.compare("underdefined input\n") != 0)
+    roomChanged();
+    /*if (zork->guiOutput.compare("underdefined input\n") != 0)
         updateOutputLabel(zork->guiOutput);
-    map->changeRooms(zork, 1);
+    map->changeRooms(zork, 1);*/
     delete command;
 }
 
@@ -50,9 +74,10 @@ void MainWindow::on_eastButton_clicked()
 {
     Command* command = new Command("go", "east");
     zork->goRoom(*command);
-    if (zork->guiOutput.compare("underdefined input\n") != 0)
+    roomChanged();
+    /*if (zork->guiOutput.compare("underdefined input\n") != 0)
         updateOutputLabel(zork->guiOutput);
-    map->changeRooms(zork, 1);
+    map->changeRooms(zork, 1);*/
     delete command;
 }
 
@@ -60,9 +85,10 @@ void MainWindow::on_southButton_clicked()
 {
     Command* command = new Command("go", "south");
     zork->goRoom(*command);
-    if (zork->guiOutput.compare("underdefined input\n") != 0)
+    roomChanged();
+    /*if (zork->guiOutput.compare("underdefined input\n") != 0)
         updateOutputLabel(zork->guiOutput);
-    map->changeRooms(zork, 1);
+    map->changeRooms(zork, 1);*/
     delete command;
 }
 
@@ -70,8 +96,24 @@ void MainWindow::on_westButton_clicked()
 {
     Command* command = new Command("go", "west");
     zork->goRoom(*command);
-    if (zork->guiOutput.compare("underdefined input\n") != 0)
+    roomChanged();
+   /* if (zork->guiOutput.compare("underdefined input\n") != 0)
         updateOutputLabel(zork->guiOutput);
-    map->changeRooms(zork, 1);
+    map->changeRooms(zork, 1);*/
     delete command;
+}
+
+void MainWindow::on_takeItemButton_clicked()
+{
+    if (!zork->currentRoom->itemsInRoom.empty())
+    {
+        vector<Item>::iterator itInRoom = zork->currentRoom->itemsInRoom.begin();
+        zork->player->addItem(*itInRoom);
+        zork->currentRoom->itemsInRoom.erase(itInRoom);
+        roomChanged();
+    }
+    if (zork->currentRoom->itemsInRoom.empty())
+    {
+        ui->takeItemButton->hide();
+    }
 }
