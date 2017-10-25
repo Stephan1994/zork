@@ -13,7 +13,6 @@ class Room {
 private:
 	string description;
 	string exitString();
-    vector <Item> itemsInRoom;
 
 
 public:
@@ -21,6 +20,7 @@ public:
     int posRow, posCol;
     map<string, std::tuple<Room*, int>> exits;
 	Room(string description);
+    vector <Item> itemsInRoom;
     void setExits(Room *north, int northDoor, Room *east, int eastDoor, Room *south, int southDoor, Room *west, int westDoor);
 	string shortDescription();
 	string longDescription();

@@ -57,21 +57,22 @@ void MapWidget::paintEvent(QPaintEvent *e)
     painter.setRenderHint( QPainter::Antialiasing, true );
     painter.setPen( QPen( Qt::black, 2 ) );
 
-    QRect backgroundRect = QRect(0,0,rect().width(),rect().width());
+    int squareSize = rect().width() < rect().height() ? rect().width() : rect().height();
+    QRect backgroundRect = QRect(0,0,squareSize,squareSize);
     painter.drawImage(backgroundRect, QImage("scroll.png"));
     //number of rooms in width and height, that should be printed by map
     int nrOfRooms = 2 * visibilityRange + 1;
 
     int rowOffset, colOffset;
-    int roomLength = (rect().width() - (((rect().width()/nrOfRooms) / 3) * 2))/nrOfRooms;
+    int roomLength = (squareSize - (((squareSize/nrOfRooms) / 3) * 2))/nrOfRooms;
     for (int row = 0; row < nrOfRooms; row++)
     {
-        rowOffset = (roomLength * row) + ((rect().width()/nrOfRooms) / 3);
+        rowOffset = (roomLength * row) + ((squareSize/nrOfRooms) / 3);
         for (int col = 0; col < nrOfRooms; col++)
         {
             if (rooms[row][col] != NULL)
             {
-                colOffset = roomLength * col + ((rect().width()/nrOfRooms) / 3);
+                colOffset = roomLength * col + ((squareSize/nrOfRooms) / 3);
                 QPoint p[4] = {
                     QPoint(0 + colOffset, 0 + rowOffset), //northwest
                     QPoint(roomLength + colOffset, 0 + rowOffset), //northeast
@@ -79,6 +80,28 @@ void MapWidget::paintEvent(QPaintEvent *e)
                     QPoint(0 + colOffset, roomLength + rowOffset) //southwest
                 };
 
+                //draw items
+                if (!rooms[row][col]->itemsInRoom.empty())
+                {
+                    for(std::vector<Item>::iterator it = rooms[row][col]->itemsInRoom.begin(); it != rooms[row][col]->itemsInRoom.end(); ++it)
+                    {
+                        int playerPosX = p[0].x() + (roomLength / 2) - (roomLength / 12);
+                        int playerPosY = p[0].y() + (roomLength / 2) - (roomLength / 12);
+
+                        int posX = p[0].x() + it->randPositionX % (roomLength - roomLength/6);
+                        int posY = p[0].y() + it->randPositionY % (roomLength - roomLength/6);
+                        if(posX > playerPosX - roomLength/6 && posX < playerPosX + roomLength/6 && posY > playerPosY - roomLength/6 && posY < playerPosY + roomLength/6)
+                        {
+                            posX += roomLength/3;
+                            posY += roomLength/3;
+                        }
+
+                        QRect itemRect = QRect(posX, posY, roomLength /6, roomLength /6);
+                        QImage itemImg = QImage(QString::fromStdString(it->getPicturePath()));
+                        painter.drawImage(itemRect, itemImg);
+                    }
+                }
+                //draw player
                 if (row == visibilityRange && col == visibilityRange)
                 {
                     int playerPosX = p[0].x() + (roomLength / 2) - (roomLength / 12);

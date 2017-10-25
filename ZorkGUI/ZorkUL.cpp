@@ -1,7 +1,5 @@
 #include <iostream>
 
-#include <QString>
-
 using namespace std;
 #include "ZorkUL.h"
 
@@ -11,10 +9,17 @@ using namespace std;
 	return 0;
 }*/
 
-ZorkUL::ZorkUL(int roomsRow, int roomsCol) {
+ZorkUL::ZorkUL(int roomsRow, int roomsCol)
+{
     maxRoomsRow = roomsRow;
     maxRoomsCol = roomsCol;
+    player = new Player("player1");
 	createRooms();
+}
+
+ZorkUL::~ZorkUL()
+{
+    //delete charac;
 }
 
 void ZorkUL::createRooms()  {
@@ -28,6 +33,10 @@ void ZorkUL::createRooms()  {
             rooms[i][j] = new Room(to_string(i)+ "," + to_string(j));
             rooms[i][j]->posRow = i;
             rooms[i][j]->posCol = j;
+            Item *it = new Item("knife", "knife.png");
+            it->randPositionX = rand();
+            it->randPositionY = rand();
+            rooms[i][j]->addItem(it);
             //TODO: add items, enemies
         }
     }
