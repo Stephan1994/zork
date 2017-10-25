@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     updateOutputLabel(zork->guiOutput);
     map = new MapWidget(zork, 1);
     map->setMinimumSize(150,150);
-    ui->gridLayout_2->addWidget(map, 1, 3, 4, 1);
+    ui->gridLayout->addWidget(map, 1, 2, 2, 2);
 }
 
 MainWindow::~MainWindow()
@@ -33,7 +33,7 @@ void MainWindow::on_teleportButton_clicked()
 
 void MainWindow::updateOutputLabel(string out)
 {
-    ui->outputLabel->setText(QString::fromStdString(out));
+    ui->storyText->setText(QString::fromStdString(out));
 }
 
 void MainWindow::on_northButton_clicked()

@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "ZorkUL.h"
-#include "mapwidget.h"
+#include "MapWidget.h"
 
 namespace Ui {
 class MainWindow;

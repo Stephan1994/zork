@@ -1,4 +1,4 @@
-#include "mapwidget.h"
+#include "MapWidget.h"
 #include "ui_mapwidget.h"
 
 #include <QPainter>
