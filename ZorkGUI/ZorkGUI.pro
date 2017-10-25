@@ -33,7 +33,8 @@ SOURCES += \
     Parser.cpp \
     Room.cpp \
     ZorkUL.cpp \
-    MapWidget.cpp
+    MapWidget.cpp \
+    player.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +45,8 @@ HEADERS += \
     Parser.h \
     Room.h \
     ZorkUL.h \
-    MapWidget.h
+    MapWidget.h \
+    player.h
 
 FORMS += \
         mainwindow.ui
