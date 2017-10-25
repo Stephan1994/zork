@@ -34,8 +34,8 @@ void ZorkUL::createRooms()  {
             rooms[i][j]->posRow = i;
             rooms[i][j]->posCol = j;
             Item *it = new Item("knife", "knife.png");
-            it->randPositionX = rand();
-            it->randPositionY = rand();
+            it->randPositionX = rand() % 10;
+            it->randPositionY = rand() % 10;
             rooms[i][j]->addItem(it);
             //TODO: add items, enemies
         }
@@ -100,7 +100,7 @@ void ZorkUL::createRooms()  {
                 }
             } while (falseCounter == 4); //repeat if there's no door
 
-            int randDoors[4] = {rand(), rand(), rand(), rand()};
+            int randDoors[4] = {rand() % 6, rand()%6, rand()%6, rand()%6};
             rooms[i][j]->setExits(exitsArray[0], randDoors[0], exitsArray[1], randDoors[1], exitsArray[2], randDoors[2], exitsArray[3], randDoors[3]);
 
             //add the backdoors for the connected rooms
