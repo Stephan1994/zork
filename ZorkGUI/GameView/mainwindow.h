@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "ZorkUL.h"
+#include "GameData\ZorkUL.h"
 #include "MapWidget.h"
 
 namespace Ui {

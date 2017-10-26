@@ -24,29 +24,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    Character.cpp \
-    Command.cpp \
-    CommandWords.cpp \
-    item.cpp \
-    Parser.cpp \
-    Room.cpp \
-    ZorkUL.cpp \
-    MapWidget.cpp \
-    player.cpp
+    GameData\main.cpp \
+    GameData\Character.cpp \
+    GameData\Command.cpp \
+    GameData\CommandWords.cpp \
+    GameData\item.cpp \
+    GameData\Parser.cpp \
+    GameData\Room.cpp \
+    GameData\ZorkUL.cpp \
+    GameData\player.cpp \
+    GameView\MapWidget.cpp \
+    GameView\mainwindow.cpp
 
 HEADERS += \
-        mainwindow.h \
-    Character.h \
-    Command.h \
-    CommandWords.h \
-    item.h \
-    Parser.h \
-    Room.h \
-    ZorkUL.h \
-    MapWidget.h \
-    player.h
+    GameData\Character.h \
+    GameData\Command.h \
+    GameData\CommandWords.h \
+    GameData\item.h \
+    GameData\Parser.h \
+    GameData\Room.h \
+    GameData\ZorkUL.h \
+    GameData\player.h \
+    GameView\MapWidget.h \
+    GameView\mainwindow.h
 
 FORMS += \
-        mainwindow.ui
+        GameView\mainwindow.ui

@@ -1,5 +1,4 @@
 #include "MapWidget.h"
-#include "ui_mapwidget.h"
 
 #include <QPainter>
 #include <QPoint>
@@ -59,7 +58,7 @@ void MapWidget::paintEvent(QPaintEvent *e)
 
     int squareSize = rect().width() < rect().height() ? rect().width() : rect().height();
     QRect backgroundRect = QRect(0,0,squareSize,squareSize);
-    painter.drawImage(backgroundRect, QImage("scroll.png"));
+    painter.drawImage(backgroundRect, QImage("GameView\\pictures\\scroll.png"));
     //number of rooms in width and height, that should be printed by map
     int nrOfRooms = 2 * visibilityRange + 1;
 

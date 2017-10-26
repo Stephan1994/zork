@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QGridLayout>
 
-#include "ZorkUL.h"
+#include "GameData\ZorkUL.h"
 
 namespace Ui {
 class MapWidget;

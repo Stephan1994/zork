@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "Command.h"
+#include "GameData\Command.h"
 #include "ui_mainwindow.h"
 #include <QImage>
 #include <QPixmap>

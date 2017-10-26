@@ -33,7 +33,7 @@ void ZorkUL::createRooms()  {
             rooms[i][j] = new Room(to_string(i)+ "," + to_string(j));
             rooms[i][j]->posRow = i;
             rooms[i][j]->posCol = j;
-            Item *it = new Item("knife", "knife.png");
+            Item *it = new Item("knife", "GameView\\pictures\\knife.png");
             it->randPositionX = rand() % 10;
             it->randPositionY = rand() % 10;
             rooms[i][j]->addItem(it);
