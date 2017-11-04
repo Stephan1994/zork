@@ -12,10 +12,11 @@ private:
 
 public:
     int randPositionX,randPositionY;
-    Item (string description, string path);
+    Item (string description, string path, bool quest = false);
 	string getShortDescription();
     string getLongDescription();
     string getPicturePath();
+    bool questItem;
 };
 
 #endif /*ITEM_H_*/

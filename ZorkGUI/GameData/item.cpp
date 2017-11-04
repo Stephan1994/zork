@@ -1,8 +1,9 @@
 #include "item.h"
 
-Item::Item(string inDescription, string path) {
+Item::Item(string inDescription, string path, bool quest) {
     this->description = inDescription;
     this->picturePath = path;
+    this->questItem = quest;
 }
 
 string Item::getPicturePath()
