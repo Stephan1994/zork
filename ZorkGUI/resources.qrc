@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>GameView/pictures/zork_logo.jpg</file>
+        <file>GameView/pictures/zork_icon.png</file>
+    </qresource>
+</RCC>

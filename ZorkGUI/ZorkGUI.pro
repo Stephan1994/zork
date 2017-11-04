@@ -52,3 +52,6 @@ HEADERS += \
 
 FORMS += \
         GameView\mainwindow.ui
+
+RESOURCES += \
+    resources.qrc
