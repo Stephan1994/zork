@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "GameData\ZorkUL.h"
 #include "MapWidget.h"
+#include "itemwidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -34,6 +35,7 @@ private:
     Ui::MainWindow *ui;
     ZorkUL *zork;
     MapWidget *map;
+    ItemWidget *items;
     void updateOutputLabel(string out);
     void roomChanged();
 };

@@ -18,6 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
     map = new MapWidget(zork, 1);
     map->setMinimumSize(150,150);
     ui->gridLayout->addWidget(map, 1, 2, 2, 2);
+    items = new ItemWidget();
+    items->setMinimumSize(150,150);
+    QVBoxLayout *boxLayout = new QVBoxLayout();
+    boxLayout->addWidget(items);
+    ui->itemBox->setLayout(boxLayout);
+    //ui->gridLayout->addWidget(items,0,3);
 }
 
 MainWindow::~MainWindow()

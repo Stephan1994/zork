@@ -34,7 +34,8 @@ SOURCES += \
     GameData\ZorkUL.cpp \
     GameData\player.cpp \
     GameView\MapWidget.cpp \
-    GameView\mainwindow.cpp
+    GameView\mainwindow.cpp \
+    GameView/itemwidget.cpp
 
 HEADERS += \
     GameData\Character.h \
@@ -46,7 +47,8 @@ HEADERS += \
     GameData\ZorkUL.h \
     GameData\player.h \
     GameView\MapWidget.h \
-    GameView\mainwindow.h
+    GameView\mainwindow.h \
+    GameView/itemwidget.h
 
 FORMS += \
         GameView\mainwindow.ui
