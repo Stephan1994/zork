@@ -33,11 +33,16 @@ void ZorkUL::createRooms()  {
             rooms[i][j] = new Room(to_string(i)+ "," + to_string(j));
             rooms[i][j]->posRow = i;
             rooms[i][j]->posCol = j;
-            Item *it = new Item("knife", "GameView\\pictures\\knife.png");
-            it->randPositionX = rand() % 10;
-            it->randPositionY = rand() % 10;
-            rooms[i][j]->addItem(it);
-            //TODO: add items, enemies
+
+            //add knives
+            if((rand() % 10) == 0)
+            {
+                Item *it = new Item("knife", "GameView\\pictures\\knife.png");
+                it->randPositionX = rand() % 10;
+                it->randPositionY = rand() % 10;
+                rooms[i][j]->addItem(it);
+            }
+
         }
     }
 
@@ -128,44 +133,23 @@ void ZorkUL::createRooms()  {
             }
         }
     }
-    /*
-	a = new Room("a");
-        a->addItem(new Item("x", 1, 11));
-        a->addItem(new Item("y", 2, 22));
-    rooms.push_back(a);
-	b = new Room("b");
-        b->addItem(new Item("xx", 3, 33));
-        b->addItem(new Item("yy", 4, 44));
-    rooms.push_back(b);
-	c = new Room("c");
-    rooms.push_back(c);
-	d = new Room("d");
-    rooms.push_back(d);
-	e = new Room("e");
-    rooms.push_back(e);
-	f = new Room("f");
-    rooms.push_back(f);
-	g = new Room("g");
-    rooms.push_back(g);
-	h = new Room("h");
-    rooms.push_back(h);
-	i = new Room("i");
-    rooms.push_back(i);
-    j = new Room("j");
-    rooms.push_back(j);
 
-//             (N, E, S, W)
-	a->setExits(f, b, d, c);
-	b->setExits(NULL, NULL, NULL, a);
-	c->setExits(NULL, a, NULL, NULL);
-    d->setExits(a, e, j, i);
-	e->setExits(NULL, NULL, NULL, d);
-	f->setExits(NULL, g, a, h);
-	g->setExits(NULL, NULL, NULL, f);
-	h->setExits(NULL, f, NULL, NULL);
-    i->setExits(NULL, d, NULL, NULL);
-    j->setExits(d, NULL, NULL, NULL);
-    */
+    //add 10 quest items
+    for (int i = 0; i < 10; i++)
+    {
+        int randRow, randCol;
+        do{
+            randRow = rand() % maxRoomsRow;
+            randCol = rand() % maxRoomsCol;
+        }
+        while(!rooms[randRow][randCol]->itemsInRoom.empty());
+
+        Item *it = new Item("coin", "GameView\\pictures\\coin.png", true);
+        it->randPositionX = rand() % 10;
+        it->randPositionY = rand() % 10;
+        rooms[randRow][randCol]->addItem(it);
+    }
+
     int randI = rand() % maxRoomsRow;
     int randJ = rand() % maxRoomsCol;
     currentRoom = rooms[randI][randJ];
