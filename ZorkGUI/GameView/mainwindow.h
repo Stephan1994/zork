@@ -17,6 +17,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void playerChanged();
+
+protected:
+    void resizeEvent(QResizeEvent* event);
 
 private slots:
     void on_teleportButton_clicked();
