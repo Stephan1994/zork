@@ -43,6 +43,13 @@ void ZorkUL::createRooms()  {
                 rooms[i][j]->addItem(it);
             }
 
+            //add ghosts
+            if((rand() % 20) == 0)
+            {
+                Enemy *en = new Enemy("ghost", "GameView\\pictures\\ghost.png");
+                rooms[i][j]->addEnemy(en);
+            }
+
         }
     }
 

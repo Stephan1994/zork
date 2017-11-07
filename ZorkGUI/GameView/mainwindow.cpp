@@ -51,7 +51,11 @@ void MainWindow::updateOutputLabel(string out)
 {
     ui->storyText->setText(QString::fromStdString(out));
     QImage *roomPic;
-    if (!zork->currentRoom->itemsInRoom.empty())
+    if (!zork->currentRoom->enemies.empty())
+    {
+        roomPic = new QImage(QString::fromStdString(zork->currentRoom->enemies.front().getPicture()));
+    }
+    else if (!zork->currentRoom->itemsInRoom.empty())
     {
         roomPic = new QImage(QString::fromStdString(zork->currentRoom->itemsInRoom.front().getPicturePath()));
     }
@@ -59,6 +63,7 @@ void MainWindow::updateOutputLabel(string out)
     {
         roomPic = new QImage(QString::fromStdString("GameView\\pictures\\room.jpg"));
     }
+
     ui->storyPic->setPixmap(QPixmap::fromImage(*roomPic).scaled(ui->storyPic->width(), ui->storyPic->height(), Qt::KeepAspectRatio));
     //ui->storyPic->setMaximumSize(250,250);
 }

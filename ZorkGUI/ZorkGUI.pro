@@ -35,7 +35,8 @@ SOURCES += \
     GameData\player.cpp \
     GameView\MapWidget.cpp \
     GameView\mainwindow.cpp \
-    GameView/itemwidget.cpp
+    GameView/itemwidget.cpp \
+    GameData/enemy.cpp
 
 HEADERS += \
     GameData\Character.h \
@@ -48,7 +49,8 @@ HEADERS += \
     GameData\player.h \
     GameView\MapWidget.h \
     GameView\mainwindow.h \
-    GameView/itemwidget.h
+    GameView/itemwidget.h \
+    GameData/enemy.h
 
 FORMS += \
         GameView\mainwindow.ui
