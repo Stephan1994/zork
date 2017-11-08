@@ -20,6 +20,7 @@ public:
     ~MainWindow();
     void playerChanged();
     void takeItemButton_clicked();
+    void roomChanged();
 
 protected:
     void resizeEvent(QResizeEvent* event);
@@ -44,7 +45,6 @@ private:
     ItemWidget *items;
     ActionsWidget *actions;
     void updateOutputLabel(string out);
-    void roomChanged();
 };
 
 #endif // MAINWINDOW_H

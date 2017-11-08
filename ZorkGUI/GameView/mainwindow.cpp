@@ -45,15 +45,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     }
 }
 
-void MainWindow::on_teleportButton_clicked()
-{
-    Command* command = new Command("teleport", "rand");
-    zork->teleport(*command);
-    updateOutputLabel(zork->guiOutput);
-    map->changeRooms(zork, 1);
-    delete command;
-}
-
 void MainWindow::updateOutputLabel(string out)
 {
     ui->storyText->setText(QString::fromStdString(out));
@@ -105,6 +96,14 @@ void MainWindow::playerChanged()
         //ui->takeItemButton->setEnabled(true);
         //ui->takeItemButton->setToolTip(QString(""));
     }
+}
+
+void MainWindow::on_teleportButton_clicked()
+{
+    Command* command = new Command("teleport", "rand");
+    zork->teleport(*command);
+    roomChanged();
+    delete command;
 }
 
 void MainWindow::on_northButton_clicked()

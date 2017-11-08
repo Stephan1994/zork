@@ -7,7 +7,8 @@ ActionsWidget::ActionsWidget(ZorkUL *zork, QWidget *parent) :
     ui(new Ui::ActionsWidget)
 {
     ui->setupUi(this);
-
+    ui->buttonGroup->setId(ui->radioButton, 0);
+    ui->buttonGroup->setId(ui->radioButton_2, 1);
     game = zork;
     changeActions();
 }
@@ -39,20 +40,24 @@ void ActionsWidget::changeActions()
 
         //set health
         ui->enemyName->setText(QString::fromStdString(game->currentRoom->enemies.front().getDescription()));
-        ui->enemyHealth->setMaximum(game->currentRoom->enemies.front().health);
+        if (ui->enemyHealth->maximum() == 105)
+            ui->enemyHealth->setMaximum(game->currentRoom->enemies.front().health);
         ui->enemyHealth->setValue(game->currentRoom->enemies.front().health);
 
         //set Answers
         if(!game->player->carriedItems.empty())
         {
+            int buttonID = 2;
             for (int i=0; i < game->player->carriedItems.size(); i++)
             {
                 if (game->player->carriedItems[i].isUsable)
                 {
                     float effectiveness = (game->player->carriedItems[i].getShortDescription() == game->currentRoom->enemies.front().getWeakness()) ? 3 : 1;
                     effectiveness = (game->player->carriedItems[i].getShortDescription() == game->currentRoom->enemies.front().getImmunity()) ? 0.1 : 1;
-                    QString actionText = QString(QString::fromStdString("Use your " + game->player->carriedItems[i].getShortDescription() + "(Dmg:" + to_string(game->player->carriedItems[i].getDamage() * effectiveness) + ")"));
-                    ui->attacksGroup->layout()->addWidget(new QRadioButton(actionText));
+                    QString actionText = QString(QString::fromStdString("Use your " + game->player->carriedItems[i].getShortDescription() + "(Dmg:" + to_string((int)(game->player->carriedItems[i].getDamage() * effectiveness)) + ")"));
+                    ui->buttonGroup->addButton(new QRadioButton(actionText), buttonID);
+                    radioButtons[buttonID] = &(game->player->carriedItems[i]);
+                    buttonID++;
                 }
             }
         }
@@ -67,6 +72,7 @@ void ActionsWidget::enableTakeItem(bool en, string tooltip)
     ui->takeItemButton->setEnabled(en);
     ui->takeItemButton->setToolTip(QString::fromStdString(tooltip));
 }
+
 ActionsWidget::~ActionsWidget()
 {
     delete ui;
@@ -86,4 +92,44 @@ void ActionsWidget::on_takeItemButton_clicked()
         game->currentRoom->itemsInRoom.erase(itInRoom);
     }
     static_cast<MainWindow*>(this->parent()->parent())->takeItemButton_clicked();
+}
+
+void ActionsWidget::on_attackButton_clicked()
+{
+    map<int, Item*>::iterator item = radioButtons.find(ui->buttonGroup->checkedId());
+    if( item != radioButtons.end())
+    {
+        game->currentRoom->enemies.front().health -= item->second->getDamage();
+    }
+    else
+    {
+        if (ui->buttonGroup->checkedButton()->text() == "Use your fists (Dmg: 5)")
+            game->currentRoom->enemies.front().health -= 5;
+        else
+        {//run away
+            if (rand() % 20 ==0)
+            {
+                if (game->currentRoom->exits.find("north") != game->currentRoom->exits.end())
+                    game->go("north");
+                else if (game->currentRoom->exits.find("south") != game->currentRoom->exits.end())
+                    game->go("south");
+                else if (game->currentRoom->exits.find("west") != game->currentRoom->exits.end())
+                    game->go("west");
+                else if (game->currentRoom->exits.find("east") != game->currentRoom->exits.end())
+                    game->go("east");
+
+                static_cast<MainWindow*>(this->parent()->parent())->roomChanged();
+            }
+        }
+
+    }
+
+    if(game->currentRoom->enemies.front().health <= 0)
+    {
+        ui->enemyHealth->setMaximum(105);
+        game->currentRoom->enemies.erase(game->currentRoom->enemies.begin());
+        static_cast<MainWindow*>(this->parent()->parent())->roomChanged();
+    }
+    else
+        changeActions();
 }

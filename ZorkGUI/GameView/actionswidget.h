@@ -21,9 +21,12 @@ public:
 private slots:
     void on_takeItemButton_clicked();
 
+    void on_attackButton_clicked();
+
 private:
     Ui::ActionsWidget *ui;
     ZorkUL *game;
+    map<int, Item*> radioButtons;
 };
 
 #endif // ACTIONSWIDGET_H
