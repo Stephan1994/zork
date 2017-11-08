@@ -24,7 +24,7 @@ void ItemWidget::paintEvent(QPaintEvent *e)
     //draw main bag
     squareSize = rect().width() < rect().height() ? rect().width() : rect().height();
     QRect backgroundRect = QRect(0,0,squareSize,squareSize);
-    painter.drawImage(backgroundRect, QImage("GameView\\pictures\\money-bag-changed.png"));
+    painter.drawImage(backgroundRect, QImage(":/GameView\\pictures\\money-bag-changed.png"));
 
     startX = squareSize / 5 + squareSize / 5 / 6;
     startY = squareSize / 5 * 2 + squareSize / 6;
@@ -33,7 +33,7 @@ void ItemWidget::paintEvent(QPaintEvent *e)
 
     //draw coin for coin counter
     QRect coinRect = QRect(startX + itemSquareSize, startY - (itemSquareSize + itemSquareSize / 3), itemSquareSize, itemSquareSize);
-    painter.drawImage(coinRect, QImage("GameView\\pictures\\coin.png"));
+    painter.drawImage(coinRect, QImage(":/GameView\\pictures\\coin.png"));
 
     //draw counter text
 
@@ -54,7 +54,7 @@ void ItemWidget::paintEvent(QPaintEvent *e)
     {
         //draw background
         QRect iconBackgroundRect = QRect(rectX, rectY, itemSquareSize, itemSquareSize);
-        painter.drawImage(iconBackgroundRect, QImage("GameView\\pictures\\item-embedded.png"));
+        painter.drawImage(iconBackgroundRect, QImage(":/GameView\\pictures\\item-embedded.png"));
 
         //draw items
         if (player->carriedItems.size() > i)
@@ -120,7 +120,7 @@ bool ItemWidget::event( QEvent *event )
                   {
                       vector<Item>::iterator itemToDeleted = player->carriedItems.begin() + i;
                       player->carriedItems.erase(itemToDeleted);
-                      static_cast<MainWindow*>(this->parent()->parent()->parent())->playerChanged();
+                      static_cast<MainWindow*>(this->parent()->parent())->playerChanged();
                   }
                   break;
               }

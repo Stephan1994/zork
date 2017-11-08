@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>480</height>
+    <height>459</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,8 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../resources.qrc">
-    <normaloff>:/icons/GameView/pictures/zork_icon.png</normaloff>:/icons/GameView/pictures/zork_icon.png</iconset>
+    <normaloff>:/icons/GameView/pictures/zork_icon.png</normaloff>
+    <normalon>:/icons/GameView/pictures/zork_icon.png</normalon>:/icons/GameView/pictures/zork_icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="minimumSize">
@@ -25,6 +26,56 @@
     </size>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="0" colspan="2">
+     <widget class="QGroupBox" name="buttonsBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Movement</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="1" column="1">
+        <widget class="QPushButton" name="teleportButton">
+         <property name="text">
+          <string>Teleport</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="westButton">
+         <property name="text">
+          <string>Go west</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="eastButton">
+         <property name="text">
+          <string>Go east</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="northButton">
+         <property name="text">
+          <string>Go north</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="southButton">
+         <property name="text">
+          <string>Go south</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="0" column="0" colspan="3">
      <widget class="QGroupBox" name="storyBox">
       <property name="sizePolicy">
@@ -69,58 +120,8 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QGroupBox" name="buttonsBox">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="title">
-       <string>Movement</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="1" column="0">
-        <widget class="QPushButton" name="westButton">
-         <property name="text">
-          <string>Go west</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="teleportButton">
-         <property name="text">
-          <string>Teleport</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QPushButton" name="eastButton">
-         <property name="text">
-          <string>Go east</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="northButton">
-         <property name="text">
-          <string>Go north</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QPushButton" name="southButton">
-         <property name="text">
-          <string>Go south</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="1" column="0" colspan="2">
-     <layout class="QVBoxLayout" name="verticalLayout"/>
+     <widget class="QWidget" name="widget" native="true"/>
     </item>
    </layout>
   </widget>

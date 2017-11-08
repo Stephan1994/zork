@@ -29,14 +29,14 @@ void ZorkUL::createRooms()
             //add knives
             if((rand() % 10) == 0)
             {
-                Item *it = new Item("knife", "GameView\\pictures\\knife.png", 10);
+                Item *it = new Item("knife", ":/GameView\\pictures\\knife.png", 10);
                 rooms[i][j]->addItem(it);
             }
 
             //add ghosts
             if((rand() % 20) == 0)
             {
-                Enemy *en = new Enemy("ghost", "GameView\\pictures\\ghost.jpg");
+                Enemy *en = new Enemy("ghost", ":/GameView\\pictures\\ghost.jpg");
                 rooms[i][j]->addEnemy(en);
             }
 
@@ -141,7 +141,7 @@ void ZorkUL::createRooms()
         }
         while(!rooms[randRow][randCol]->itemsInRoom.empty());
 
-        Item *it = new Item("coin", "GameView\\pictures\\coin.png", true);
+        Item *it = new Item("coin", ":/GameView\\pictures\\coin.png", true);
         it->randPositionX = rand() % 10;
         it->randPositionY = rand() % 10;
         rooms[randRow][randCol]->addItem(it);

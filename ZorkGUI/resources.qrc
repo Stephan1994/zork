@@ -2,4 +2,15 @@
     <qresource prefix="/icons">
         <file>GameView/pictures/zork_icon.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>GameView/pictures/coin.png</file>
+        <file>GameView/pictures/compass.jpg</file>
+        <file>GameView/pictures/ghost.jpg</file>
+        <file>GameView/pictures/item-embedded.png</file>
+        <file>GameView/pictures/knife.png</file>
+        <file>GameView/pictures/money-bag-changed.png</file>
+        <file>GameView/pictures/room.jpg</file>
+        <file>GameView/pictures/scroll.png</file>
+        <file>GameView/pictures/zork_icon.png</file>
+    </qresource>
 </RCC>

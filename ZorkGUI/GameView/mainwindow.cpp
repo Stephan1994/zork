@@ -59,7 +59,7 @@ void MainWindow::updateOutputLabel(string out)
     }
     else
     {
-        roomPic = new QImage(QString::fromStdString("GameView\\pictures\\room.jpg"));
+        roomPic = new QImage(QString::fromStdString(":/GameView\\pictures\\room.jpg"));
     }
 
     ui->storyPic->setPixmap(QPixmap::fromImage(*roomPic).scaled(ui->storyPic->width(), ui->storyPic->height(), Qt::KeepAspectRatio));
