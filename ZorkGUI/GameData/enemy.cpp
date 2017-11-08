@@ -44,3 +44,8 @@ string Enemy::getImmunity()
 {
     return immunity;
 }
+
+int Enemy::getTimeLimit()
+{
+    return timeLimit;
+}

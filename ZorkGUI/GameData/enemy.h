@@ -13,6 +13,7 @@ public:
     string getImmunity();
     string getWeakness();
     string getDescription();
+    int getTimeLimit();
     int health;
     bool time;
 private:

@@ -1,6 +1,7 @@
 #include "actionswidget.h"
 #include "ui_actionswidget.h"
 #include "mainwindow.h"
+#include <QMessageBox>
 
 ActionsWidget::ActionsWidget(ZorkUL *zork, QWidget *parent) :
     QWidget(parent),
@@ -10,6 +11,8 @@ ActionsWidget::ActionsWidget(ZorkUL *zork, QWidget *parent) :
     ui->buttonGroup->setId(ui->radioButton, 0);
     ui->buttonGroup->setId(ui->radioButton_2, 1);
     game = zork;
+    answerTimer = new QTimer();
+    connect(answerTimer, SIGNAL(timeout()), this, SLOT(timeout()));
     changeActions();
 }
 
@@ -65,7 +68,13 @@ void ActionsWidget::changeActions()
         //setTime
         if (game->currentRoom->enemies.front().time)
         {
-
+            if (!answerTimer->isActive())
+            {
+                secondCounter = game->currentRoom->enemies.front().getTimeLimit();
+                ui->timeBar->setMaximum(secondCounter);
+                ui->timeBar->setValue(secondCounter);
+                answerTimer->start(1000);
+            }
         }
     }
 }
@@ -135,4 +144,24 @@ void ActionsWidget::on_attackButton_clicked()
     }
     else
         changeActions();
+}
+
+void ActionsWidget::timeout()
+{
+    if (secondCounter > 1)
+    {
+        secondCounter--;
+        ui->timeBar->setValue(secondCounter);
+        answerTimer->start(1000);
+    }
+    else
+    {
+        ui->timeBar->setValue(0);
+        answerTimer->stop();
+        QMessageBox::warning(this, QString::fromStdString("Defeted"), QString::fromStdString("You have been defeated by the " + game->currentRoom->enemies.front().getName() + "!\nThe " + game->currentRoom->enemies.front().getName() + "disappeared after this epic win and you will lose some health. Watch out the next time."),
+                                        QMessageBox::Ok);
+        ui->enemyHealth->setMaximum(105);
+        game->currentRoom->enemies.erase(game->currentRoom->enemies.begin());
+        static_cast<MainWindow*>(this->parent()->parent())->roomChanged();
+    }
 }

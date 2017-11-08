@@ -2,6 +2,7 @@
 #define ACTIONSWIDGET_H
 
 #include <QWidget>
+#include <QTimer>
 #include "GameData/ZorkUL.h"
 
 namespace Ui {
@@ -23,10 +24,14 @@ private slots:
 
     void on_attackButton_clicked();
 
+    void timeout();
+
 private:
     Ui::ActionsWidget *ui;
     ZorkUL *game;
     map<int, Item*> radioButtons;
+    QTimer *answerTimer;
+    int secondCounter;
 };
 
 #endif // ACTIONSWIDGET_H
