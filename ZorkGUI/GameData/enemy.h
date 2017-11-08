@@ -14,10 +14,10 @@ public:
     string getWeakness();
     string getDescription();
     int health;
+    bool time;
 private:
     string name;
     string picture;
-    bool time;
     int timeLimit;
     int damage;
     string immunity;

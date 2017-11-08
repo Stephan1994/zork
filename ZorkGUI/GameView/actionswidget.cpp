@@ -63,7 +63,10 @@ void ActionsWidget::changeActions()
         }
 
         //setTime
+        if (game->currentRoom->enemies.front().time)
+        {
 
+        }
     }
 }
 
