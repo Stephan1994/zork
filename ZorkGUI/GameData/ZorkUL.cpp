@@ -141,7 +141,7 @@ void ZorkUL::createRooms()
         }
         while(!rooms[randRow][randCol]->itemsInRoom.empty());
 
-        Item *it = new Item("coin", ":/GameView\\pictures\\coin.png", true);
+        Item *it = new Item("coin", ":/GameView\\pictures\\coin.png", 0, true, false);
         it->randPositionX = rand() % 10;
         it->randPositionY = rand() % 10;
         rooms[randRow][randCol]->addItem(it);
