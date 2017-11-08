@@ -5,6 +5,7 @@
 #include "GameData\ZorkUL.h"
 #include "MapWidget.h"
 #include "itemwidget.h"
+#include "actionswidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +19,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void playerChanged();
+    void takeItemButton_clicked();
 
 protected:
     void resizeEvent(QResizeEvent* event);
@@ -33,13 +35,14 @@ private slots:
 
     void on_westButton_clicked();
 
-    void on_takeItemButton_clicked();
+
 
 private:
     Ui::MainWindow *ui;
     ZorkUL *zork;
     MapWidget *map;
     ItemWidget *items;
+    ActionsWidget *actions;
     void updateOutputLabel(string out);
     void roomChanged();
 };

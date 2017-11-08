@@ -3,11 +3,6 @@
 using namespace std;
 #include "ZorkUL.h"
 
-/*int main(int argc, char argv[]) {
-	ZorkUL temp;
-	temp.play();
-	return 0;
-}*/
 
 ZorkUL::ZorkUL(int roomsRow, int roomsCol)
 {
@@ -22,31 +17,26 @@ ZorkUL::~ZorkUL()
     //delete charac;
 }
 
-void ZorkUL::createRooms()  {
-    //Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
-
+void ZorkUL::createRooms()
+{
     //creating rooms
     for (int i=0; i<maxRoomsRow; i++)
     {
         for (int j=0; j<maxRoomsCol; j++)
         {
-            rooms[i][j] = new Room(to_string(i)+ "," + to_string(j));
-            rooms[i][j]->posRow = i;
-            rooms[i][j]->posCol = j;
+            rooms[i][j] = new Room(to_string(i)+ "," + to_string(j), i, j);
 
             //add knives
             if((rand() % 10) == 0)
             {
-                Item *it = new Item("knife", "GameView\\pictures\\knife.png");
-                it->randPositionX = rand() % 10;
-                it->randPositionY = rand() % 10;
+                Item *it = new Item("knife", "GameView\\pictures\\knife.png", 10);
                 rooms[i][j]->addItem(it);
             }
 
             //add ghosts
             if((rand() % 20) == 0)
             {
-                Enemy *en = new Enemy("ghost", "GameView\\pictures\\ghost.png");
+                Enemy *en = new Enemy("ghost", "GameView\\pictures\\ghost.jpg");
                 rooms[i][j]->addEnemy(en);
             }
 

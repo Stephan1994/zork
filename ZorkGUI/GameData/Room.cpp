@@ -2,8 +2,10 @@
 #include "Command.h"
 
 
-Room::Room(string description) {
+Room::Room(string description, int row, int col) {
 	this->description = description;
+    this->posRow = row;
+    this->posCol = col;
 }
 
 void Room::setExits(Room *north, int northDoor, Room *east, int eastDoor, Room *south, int southDoor, Room *west, int westDoor) {

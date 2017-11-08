@@ -15,12 +15,19 @@ MainWindow::MainWindow(QWidget *parent) :
     zork = new ZorkUL(50,50);
     zork->play();
     updateOutputLabel(zork->guiOutput);
+    //add Map
     map = new MapWidget(zork, 1);
     map->setMinimumSize(250,250);
     ui->gridLayout->addWidget(map, 1, 2, 2, 2);
+
+    //add ItemWidget
     items = new ItemWidget(zork->player, this);
     items->setMinimumSize(150,150);
-     ui->gridLayout->addWidget(items,0,3);
+    ui->gridLayout->addWidget(items,0,3);
+
+    //add ActionWidget
+    actions = new ActionsWidget(zork);
+    ui->gridLayout->addWidget(actions, 1, 0, 1, 2);
     roomChanged();
 
 }
@@ -73,27 +80,30 @@ void MainWindow::roomChanged()
     if (zork->guiOutput.compare("underdefined input\n") != 0)
         updateOutputLabel(zork->guiOutput);
     map->changeRooms(zork, 1);
-    if(!zork->currentRoom->itemsInRoom.empty())
+    actions->changeActions();
+    /*if(!zork->currentRoom->itemsInRoom.empty())
     {
         ui->takeItemButton->show();
     }
     else
     {
         ui->takeItemButton->hide();
-    }
+    }*/
 }
 
 void MainWindow::playerChanged()
 {
     if (zork->player->carriedItems.size() == 6)
     {
-        ui->takeItemButton->setEnabled(false);
-        ui->takeItemButton->setToolTip(QString("You cannot carry more than six items.\nYou can throw items away by rightclicking on them."));
+        actions->enableTakeItem(false, "You cannot carry more than six items.\nYou can throw items away by rightclicking on them.");
+        //ui->takeItemButton->setEnabled(false);
+        //ui->takeItemButton->setToolTip(QString("You cannot carry more than six items.\nYou can throw items away by rightclicking on them."));
     }
     else
     {
-        ui->takeItemButton->setEnabled(true);
-        ui->takeItemButton->setToolTip(QString(""));
+        actions->enableTakeItem(true, "Pick up item.");
+        //ui->takeItemButton->setEnabled(true);
+        //ui->takeItemButton->setToolTip(QString(""));
     }
 }
 
@@ -129,30 +139,9 @@ void MainWindow::on_westButton_clicked()
     delete command;
 }
 
-void MainWindow::on_takeItemButton_clicked()
+void MainWindow::takeItemButton_clicked()
 {
-    if (!zork->currentRoom->itemsInRoom.empty())
-    {
-        vector<Item>::iterator itInRoom = zork->currentRoom->itemsInRoom.begin();
-        if (itInRoom->questItem)
-        {
-            zork->player->addQuestItem(*itInRoom);
-            zork->currentRoom->itemsInRoom.erase(itInRoom);
-            roomChanged();
-            playerChanged();
-            items->update();
-        }
-        else if (zork->player->carriedItems.size() <= 6)
-        {
-            zork->player->addItem(*itInRoom);
-            zork->currentRoom->itemsInRoom.erase(itInRoom);
-            roomChanged();
-            playerChanged();
-            items->update();
-        }
-    }
-    if (zork->currentRoom->itemsInRoom.empty())
-    {
-        ui->takeItemButton->hide();
-    }
+    roomChanged();
+    playerChanged();
+    items->update();
 }

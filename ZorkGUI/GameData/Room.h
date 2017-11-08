@@ -22,7 +22,7 @@ public:
     vector<Item> itemsInRoom;
     vector<Enemy> enemies;
 
-    Room(string description);
+    Room(string description, int row, int col);
     void setExits(Room *north, int northDoor, Room *east, int eastDoor, Room *south, int southDoor, Room *west, int westDoor);
 	string shortDescription();
 	string longDescription();
