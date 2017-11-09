@@ -59,14 +59,16 @@ void ActionsWidget::changeActions()
                     float effectiveness = (game->player->carriedItems[i].getShortDescription() == game->currentRoom->enemies.front().getWeakness()) ? 3 : 1;
                     effectiveness = (game->player->carriedItems[i].getShortDescription() == game->currentRoom->enemies.front().getImmunity()) ? 0.1 : 1;
                     QString actionText = QString(QString::fromStdString("Use your " + game->player->carriedItems[i].getShortDescription() + "(Dmg:" + to_string((int)(game->player->carriedItems[i].getDamage() * effectiveness)) + ")"));
-                    ui->buttonGroup->addButton(new QRadioButton(actionText), buttonID);
+                    QRadioButton *addedAction = new QRadioButton(actionText);
+                    ui->attacksGroup->layout()->addWidget(addedAction);
+                    ui->buttonGroup->addButton(addedAction, buttonID);
                     radioButtons[buttonID] = &(game->player->carriedItems[i]);
                     buttonID++;
                 }
             }
         }
 
-        //setTime
+        //set time
         if (game->currentRoom->enemies.front().time)
         {
             if (!answerTimer->isActive())
