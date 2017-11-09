@@ -12,6 +12,7 @@ ActionsWidget::ActionsWidget(ZorkUL *zork, QWidget *parent) :
     ui->buttonGroup->setId(ui->radioButton_2, 1);
     game = zork;
     answerTimer = new QTimer();
+    answerTimer->setInterval(1000);
     connect(answerTimer, SIGNAL(timeout()), this, SLOT(timeout()));
     changeActions();
 }
@@ -70,11 +71,18 @@ void ActionsWidget::changeActions()
         {
             if (!answerTimer->isActive())
             {
+                ui->timeBar->show();
+                ui->timeLabel->show();
                 secondCounter = game->currentRoom->enemies.front().getTimeLimit();
                 ui->timeBar->setMaximum(secondCounter);
                 ui->timeBar->setValue(secondCounter);
-                answerTimer->start(1000);
+                answerTimer->start();
             }
+        }
+        else
+        {
+            ui->timeBar->hide();
+            ui->timeLabel->hide();
         }
     }
 }
@@ -138,6 +146,7 @@ void ActionsWidget::on_attackButton_clicked()
 
     if(game->currentRoom->enemies.front().health <= 0)
     {
+        answerTimer->stop();
         ui->enemyHealth->setMaximum(105);
         game->currentRoom->enemies.erase(game->currentRoom->enemies.begin());
         static_cast<MainWindow*>(this->parent()->parent())->roomChanged();
@@ -152,7 +161,7 @@ void ActionsWidget::timeout()
     {
         secondCounter--;
         ui->timeBar->setValue(secondCounter);
-        answerTimer->start(1000);
+        //answerTimer->start(1000);
     }
     else
     {
