@@ -8,6 +8,17 @@ Item::Item(string name, string path, int damage,  bool quest, bool usable) {
     this->randPositionX = rand() % 10;
     this->randPositionY = rand() % 10;
     this->damage = damage;
+
+    this->appearenceText = getStory();
+}
+
+string Item::getStory()
+{
+    string out = "At last something. There is something laying around on the ground.";
+    if (questItem)
+        out += "It's one of these epic golden coins!! Pick it up quickly before someone else comes.";
+    else
+        out += "Looks like it is a " + name + ". Pick it up if you need some assistence.";
 }
 
 string Item::getPicturePath() const
@@ -22,7 +33,12 @@ string Item::getName() const
 
 string Item::getLongDescription() const
 {
-    return " item(s), " + name + ".\n";
+    return "<b>item(s)</b>, <font color='red'>" + name + "</font>.\n";
+}
+
+string Item::getAppearenceText() const
+{
+    return appearenceText;
 }
 
 int Item::getDamage() const

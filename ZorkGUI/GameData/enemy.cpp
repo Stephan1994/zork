@@ -13,6 +13,24 @@ Enemy::Enemy(string name, string picture, string immunity, string weakness)
 
     this->immunity = immunity;
     this->weakness = weakness;
+
+    this->appearenceText = createStoryText();
+}
+
+string Enemy::createStoryText()
+{
+    string out = "A wild " + name + " appeared. It seems like it wants to fight. Try to defeat it!\n";
+    if (immunity != "")
+        out += "You should be carefull with a " + immunity + ". I think it isn't quite effective against this enemy.";
+    if (weakness != "")
+        out += "There are many possibilities in defeating this enemy. But the best one would be using a " + weakness + ". It's very effective!";
+    if(time)
+        out += "Hurry up! It will attack you in " + to_string(timeLimit) + "! You have to beat it before.\n";
+    out += "Enemy: " + name + "\n";
+    out += "Health: " + to_string(health) + "\n";
+    out += "Damage: " + to_string(damage) + "\n";
+
+    return out;
 }
 
 string Enemy::getName() const
@@ -66,4 +84,9 @@ void Enemy::setHealth(int newHealth)
             this->health = newHealth;
     else
         this->health = 100;
+}
+
+string Enemy::getAppearenceText() const
+{
+    return appearenceText;
 }

@@ -13,6 +13,7 @@ public:
     string getImmunity() const;
     string getWeakness() const;
     string getDescription() const;
+    string getAppearenceText() const;
     int getTimeLimit() const;
     int getHealth() const;
     void setHealth(int newHealth);
@@ -27,6 +28,8 @@ private:
     string weakness;
     int health;
     bool time;
+    string appearenceText;
+    string createStoryText();
 };
 
 #endif // ENEMY_H

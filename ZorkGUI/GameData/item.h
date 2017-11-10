@@ -9,16 +9,20 @@ private:
     string name;
 	string longDescription;
     string picturePath;
+    string appearenceText;
     int damage;
     int randPositionX,randPositionY;
     bool questItem;
     bool usable;
+
+    string getStory();
 
 public:
     Item (string name, string path, int damage, bool quest = false, bool usable = true);
     string getName() const;
     string getLongDescription() const;
     string getPicturePath() const;
+    string getAppearenceText() const;
     int getDamage() const;
     int getXPosition() const;
     int getYPosition() const;

@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //start game
-    zork = new ZorkUL(50,50);
+    zork = new ZorkUL(20,20);
     zork->play();
     updateOutputLabel(zork->guiOutput);
 
@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->gridLayout->addWidget(actions, 1, 0, 1, 2);
     roomChanged();
 
+    QFont f( "Arial", 12);
+    ui->storyText->setFont( f);
 }
 
 MainWindow::~MainWindow()

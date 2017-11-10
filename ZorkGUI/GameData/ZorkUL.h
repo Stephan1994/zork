@@ -20,7 +20,7 @@ private:
     int maxRoomsCol;
 
 	void createRooms();
-	void printWelcome();
+    void startStory();
 
 public:
     string guiOutput;

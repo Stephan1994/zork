@@ -36,6 +36,24 @@ string Room::shortDescription() {
 }
 
 string Room::longDescription() {
+    string out;
+    if (enemy == NULL && itemsInRoom.empty())
+    {
+        out = "Just another empty room with nothing in it except for some destroyed furniture.\n";
+        if (rand() % 10 == 0)
+            out += "Hope it will get more exciting!\n";
+        if (rand() % 10 == 0)
+            out += "Man, these coins are very well hidden!\n";
+        if (rand() % 20 == 0)
+            out += "At least not another ghost or whatever..\n";
+        if (rand() % 20 == 0)
+            out += "Who would even wanna live in this house?! There are so many empty rooms!\n";
+    }
+    else if (enemy != NULL)
+    {
+        out = enemy->getAppearenceText();
+
+    }
 	return "room = " + description + ".\n" + displayItem() + exitString();
 }
 

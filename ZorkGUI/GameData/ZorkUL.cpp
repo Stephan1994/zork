@@ -154,20 +154,24 @@ void ZorkUL::createRooms()
 
     int randI = rand() % maxRoomsRow;
     int randJ = rand() % maxRoomsCol;
+    if (rooms[randI][randJ]->enemyAvailable())
+        rooms[randI][randJ]->enemyDefeated();
     currentRoom = rooms[randI][randJ];
+
 }
 
 void ZorkUL::play()
 {
-	printWelcome();
+    startStory();
 }
 
-void ZorkUL::printWelcome()
+void ZorkUL::startStory()
 {
-    guiOutput = "start\n";
-    guiOutput += "info for help\n\n";
-    guiOutput += currentRoom->longDescription();
-    guiOutput += "\n";
+    guiOutput = "You play as a Postman named Spoones McFreind.\n\
+Due to a deep mysterious love of mazes and maze-games, Spoones enters himself into the most dangerous real life maze-game ever devised.\n\
+The Grand prize is the magical ability to summon wasps. \n\
+He is blindfolded, spun around 3 times, then put under general anesthetic and man-hadled into  the center of a damp, dark, mysterious maze.\n\n\
+You can only escape by collecting ten of these very rare and antique golden coins.\n\n";
 }
 
 /** COMMANDS **/
@@ -187,7 +191,8 @@ void ZorkUL::goRoom(Command command) {
         guiOutput = "underdefined input\n";
 	else {
 		currentRoom = nextRoom;
-        guiOutput = currentRoom->longDescription();
+        guiOutput += "----------------------------";
+        guiOutput += currentRoom->longDescription();
         guiOutput += "\n";
 	}
 }
@@ -201,8 +206,8 @@ void ZorkUL::teleport(Command com){
     string room = com.getSecondWord();
     if (room.compare("rand") == 0){
         //unsigned int roomSize = rooms.size();
-        unsigned int randRoomI = rand() % 50;
-        unsigned int randRoomJ = rand() % 50;
+        unsigned int randRoomI = rand() % maxRoomsRow;
+        unsigned int randRoomJ = rand() % maxRoomsCol;
         currentRoom = rooms[randRoomI][randRoomJ];
     }
    guiOutput = currentRoom->longDescription();
