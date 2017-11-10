@@ -168,9 +168,10 @@ void ZorkUL::play()
 void ZorkUL::startStory()
 {
     guiOutput = "You play as a Postman named Spoones McFreind.\n\
-Due to a deep mysterious love of mazes and maze-games, Spoones enters himself into the most dangerous real life maze-game ever devised.\n\
+Due to a deep, mysterious love of mazes and maze-games, You enter yourself into the most dangerous real life maze-game ever devised.\n\
 The Grand prize is the magical ability to summon wasps. \n\
-He is blindfolded, spun around 3 times, then put under general anesthetic and man-hadled into  the center of a damp, dark, mysterious maze.\n\n\
+You are blindfolded, spun around 3 times, then put under general anesthetic and man-hadled into  the center of a damp, dark, mysterious maze.\n\
+You appear to be in a tudor-style town house with Italian marble floors and off white mouldy walls, teastefuly coupled with rotting furniture.\n\n\
 You can only escape by collecting ten of these very rare and antique golden coins.\n\n";
 }
 

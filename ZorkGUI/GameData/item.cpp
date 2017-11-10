@@ -14,11 +14,11 @@ Item::Item(string name, string path, int damage,  bool quest, bool usable) {
 
 string Item::getStory()
 {
-    string out = "At last something. There is something laying around on the ground.";
+    string out = "Hey, what's that? There is something laying around on the ground. Rather careless if you ask me, I could have snapped my neck!";
     if (questItem)
         out += "It's one of these epic golden coins!! Pick it up quickly before someone else comes.";
     else
-        out += "Looks like it is a " + name + ". Pick it up if you need some assistence.";
+        out += "Looks like it is a " + name + ". Pick it up, it could come in handy.";
 }
 
 string Item::getPicturePath() const

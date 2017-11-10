@@ -45,9 +45,11 @@ string Room::longDescription() {
         if (rand() % 10 == 0)
             out += "Man, these coins are very well hidden!\n";
         if (rand() % 20 == 0)
-            out += "At least not another ghost or whatever..\n";
+            out += "At least there is no goddamned ghost or whatever..\n";
         if (rand() % 20 == 0)
             out += "Who would even wanna live in this house?! There are so many empty rooms!\n";
+        if (rand() % 20 == 0)
+            out += "I can't wait to take a bath when i get out of here.";
     }
     else if (enemy != NULL)
     {

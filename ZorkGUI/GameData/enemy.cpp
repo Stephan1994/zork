@@ -21,11 +21,11 @@ string Enemy::createStoryText()
 {
     string out = "A wild " + name + " appeared. It seems like it wants to fight. Try to defeat it!\n";
     if (immunity != "")
-        out += "You should be carefull with a " + immunity + ". I think it isn't quite effective against this enemy.";
+        out += "You should be carefull with a " + immunity + ". It doesn't seem to be very effective against this enemy.";
     if (weakness != "")
-        out += "There are many possibilities in defeating this enemy. But the best one would be using a " + weakness + ". It's very effective!";
+        out += "It looks like a " + weakness + " would be quite effective against this dude!";
     if(time)
-        out += "Hurry up! It will attack you in " + to_string(timeLimit) + "! You have to beat it before.\n";
+        out += "Hurry up! It will attack you in " + to_string(timeLimit) + "! You have to beat it to a bloody pulp!\n";
     out += "Enemy: " + name + "\n";
     out += "Health: " + to_string(health) + "\n";
     out += "Damage: " + to_string(damage) + "\n";

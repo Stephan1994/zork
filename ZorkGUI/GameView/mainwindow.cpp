@@ -84,15 +84,15 @@ void MainWindow::roomChanged()
     if (zork->getCurrentRoom()->enemyAvailable())
     {
         ui->northButton->setEnabled(false);
-        ui->northButton->setToolTip(QString::fromStdString("You can't move while attacked."));
+        ui->northButton->setToolTip(QString::fromStdString("You can't move while being attacked."));
         ui->southButton->setEnabled(false);
-        ui->southButton->setToolTip(QString::fromStdString("You can't move while attacked."));
+        ui->southButton->setToolTip(QString::fromStdString("You can't move while being attacked."));
         ui->westButton->setEnabled(false);
-        ui->westButton->setToolTip(QString::fromStdString("You can't move while attacked."));
+        ui->westButton->setToolTip(QString::fromStdString("You can't move while being attacked."));
         ui->eastButton->setEnabled(false);
-        ui->eastButton->setToolTip(QString::fromStdString("You can't move while attacked."));
+        ui->eastButton->setToolTip(QString::fromStdString("You can't move while being attacked."));
         ui->teleportButton->setEnabled(false);
-        ui->teleportButton->setToolTip(QString::fromStdString("You can't move while attacked."));
+        ui->teleportButton->setToolTip(QString::fromStdString("You can't move while being attacked."));
     }
     else
     {
