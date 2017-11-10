@@ -192,7 +192,7 @@ void ZorkUL::goRoom(Command command) {
         guiOutput = "underdefined input\n";
 	else {
 		currentRoom = nextRoom;
-        guiOutput += "----------------------------";
+        guiOutput += "----------------------------\n";
         guiOutput += currentRoom->longDescription();
         guiOutput += "\n";
 	}

@@ -4,6 +4,7 @@
 #include <QImage>
 #include <QPixmap>
 #include <QString>
+#include <QScrollBar>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QFont f( "Arial", 12);
     ui->storyText->setFont( f);
+
+    QScrollBar *scroll = ui->scrollArea->verticalScrollBar();
+    connect (scroll,SIGNAL(rangeChanged(int,int)), this, SLOT(moveScrollbarToBottom(int,int)));
 }
 
 MainWindow::~MainWindow()
@@ -56,6 +60,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 void MainWindow::updateOutputLabel(string out)
 {
     ui->storyText->setText(QString::fromStdString(out));
+    ui->scrollArea->verticalScrollBar()->setSliderPosition(ui->scrollArea->verticalScrollBar()->maximum());
     QImage roomPic;
     if (zork->getCurrentRoom()->enemyAvailable())
     {
@@ -164,6 +169,12 @@ void MainWindow::playerChanged()
         actions->enableTakeItem(false, "You cannot carry more than six items.\nYou can throw items away by rightclicking on them.");
     else
         actions->enableTakeItem(true, "Pick up item.");
+}
+
+void MainWindow::moveScrollbarToBottom(int min, int max)
+{
+    Q_UNUSED(min);
+    ui->scrollArea->verticalScrollBar()->setValue(max);
 }
 
 void MainWindow::on_teleportButton_clicked()

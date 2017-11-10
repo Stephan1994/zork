@@ -53,10 +53,13 @@ string Room::longDescription() {
     }
     else if (enemy != NULL)
     {
-        out = enemy->getAppearenceText();
-
+        out += enemy->getAppearenceText();
     }
-	return "room = " + description + ".\n" + displayItem() + exitString();
+    else if (!itemsInRoom.empty())
+    {
+        out += itemsInRoom.at(0)->getAppearenceText();
+    }
+    return out;
 }
 
 string Room::exitString() {

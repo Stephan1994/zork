@@ -119,7 +119,15 @@ void ActionsWidget::on_takeItemButton_clicked()
     //add first item in room to player inventory (only one item possible at the moment)
     Item* itInRoom = game->getCurrentRoom()->getItemByIndex(0);
     if (itInRoom->isQuestItem())
+    {
         game->getPlayer()->addItem(itInRoom);
+        if (game->getPlayer()->numberOfCarriedQuestItems() == 10)
+        {
+            QMessageBox::warning(this, QString::fromStdString("You have won"), QString::fromStdString("You have won! Congratulations!"),
+                                            QMessageBox::Close);
+            QApplication::quit();
+        }
+    }
     else if (game->getPlayer()->numberOfCarriedItems() <= 6)
         game->getPlayer()->addItem(itInRoom);
 
@@ -134,14 +142,14 @@ void ActionsWidget::on_takeItemButton_clicked()
 void ActionsWidget::on_attackButton_clicked()
 {
     map<QRadioButton*, Item*>::iterator item = radioButtons.find((QRadioButton*)ui->buttonGroup->checkedButton());
-    //check if chosen anser needs an item
+    //check if chosen answer needs an item
     if( item != radioButtons.end())
     {
         game->getCurrentRoom()->getEnemy()->setHealth(game->getCurrentRoom()->getEnemy()->getHealth() - item->second->getDamage());
     }
     else
     {
-        if (ui->buttonGroup->checkedButton()->text() == "Use your fists (Dmg: 5)")
+        if (ui->buttonGroup->checkedButton()->text() == "Use your fists. (Dmg: 5)")
             game->getCurrentRoom()->getEnemy()->setHealth(game->getCurrentRoom()->getEnemy()->getHealth() - 5);
         else
         {//run away
@@ -180,7 +188,6 @@ void ActionsWidget::timeout()
     {
         secondCounter--;
         ui->timeBar->setValue(secondCounter);
-        //answerTimer->start(1000);
     }
     else
     {

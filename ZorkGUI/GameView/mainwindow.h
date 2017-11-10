@@ -36,7 +36,7 @@ private slots:
 
     void on_westButton_clicked();
 
-
+    void moveScrollbarToBottom(int min, int max);
 
 private:
     Ui::MainWindow *ui;
