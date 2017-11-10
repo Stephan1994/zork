@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //start game
-    zork = new ZorkUL(20,20);
+    zork = new ZorkUL(10,10);
     zork->play();
     updateOutputLabel(zork->guiOutput);
 

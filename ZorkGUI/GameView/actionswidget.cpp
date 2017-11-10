@@ -40,13 +40,22 @@ void ActionsWidget::changeActions()
     if (game->getCurrentRoom()->getNumberofItems() == 0)
         ui->takeItemButton->hide();
     else
-        ui->takeItemButton->show();
+    {
+        if (game->getCurrentRoom()->getItemByIndex(0)->getName() == "Teleporter")
+        {
+            ui->takeItemButton->hide();
+        }
+        else
+        {
+            ui->takeItemButton->show();
+            //enable or disable itemButton if already 6 items are carried
+            if (game->getPlayer()->numberOfCarriedItems() != 6 || game->getCurrentRoom()->getItemByIndex(0)->isQuestItem())
+                enableTakeItem(true, "Add item to Inventory.");
+            else
+                enableTakeItem(false, "You cannot carry more than six items.\nYou can throw items away by rightclicking on them.");
+        }
+    }
 
-    //enable or disable itemButton if already 6 items are carried
-    if (game->getPlayer()->numberOfCarriedItems() != 6)
-        enableTakeItem(true, "Add item to Inventory.");
-    else
-        enableTakeItem(false, "You cannot carry more than six items.\nYou can throw items away by rightclicking on them.");
 
     //no enemy in room -> hide attackGroup
     if (!game->getCurrentRoom()->enemyAvailable())
@@ -71,10 +80,12 @@ void ActionsWidget::changeActions()
             int buttonID = 2;
             for (int i=0; i < game->getPlayer()->numberOfCarriedItems(); i++)
             {
+                ui->radioButton->setChecked(true);
                 if (game->getPlayer()->getItemByIndex(i)->isUsable())
                 {
                     float effectiveness = (game->getPlayer()->getItemByIndex(i)->getName() == game->getCurrentRoom()->getEnemy()->getWeakness()) ? 3 : 1;
-                    effectiveness = (game->getPlayer()->getItemByIndex(i)->getName() == game->getCurrentRoom()->getEnemy()->getImmunity()) ? 0.1 : 1;
+                    if (effectiveness == 1)
+                        effectiveness = (game->getPlayer()->getItemByIndex(i)->getName() == game->getCurrentRoom()->getEnemy()->getImmunity()) ? 0.1 : 1;
                     QString actionText = QString(QString::fromStdString("Use your " + game->getPlayer()->getItemByIndex(i)->getName() + " (Dmg: " + to_string((int)(game->getPlayer()->getItemByIndex(i)->getDamage() * effectiveness)) + ")"));
                     QRadioButton *addedAction = new QRadioButton(actionText);
                     ui->attacksGroup->layout()->addWidget(addedAction);
@@ -145,11 +156,16 @@ void ActionsWidget::on_attackButton_clicked()
     //check if chosen answer needs an item
     if( item != radioButtons.end())
     {
-        game->getCurrentRoom()->getEnemy()->setHealth(game->getCurrentRoom()->getEnemy()->getHealth() - item->second->getDamage());
+        float effectiveness = (item->second->getName() == game->getCurrentRoom()->getEnemy()->getWeakness()) ? 3 : 1;
+        if (effectiveness == 1)
+            effectiveness = (item->second->getName() == game->getCurrentRoom()->getEnemy()->getImmunity()) ? 0.1 : 1;
+
+        int test = item->second->getDamage();
+        game->getCurrentRoom()->getEnemy()->setHealth(game->getCurrentRoom()->getEnemy()->getHealth() - (int)(item->second->getDamage()*effectiveness));
     }
     else
     {
-        if (ui->buttonGroup->checkedButton()->text() == "Use your fists. (Dmg: 5)")
+        if (ui->buttonGroup->checkedButton()->text() == "Use your fists (Dmg: 5)")
             game->getCurrentRoom()->getEnemy()->setHealth(game->getCurrentRoom()->getEnemy()->getHealth() - 5);
         else
         {//run away
@@ -193,8 +209,12 @@ void ActionsWidget::timeout()
     {
         ui->timeBar->setValue(0);
         answerTimer->stop();
-        QMessageBox::warning(this, QString::fromStdString("Defeted"), QString::fromStdString("You have been defeated by the " + game->getCurrentRoom()->getEnemy()->getName() + "!\nThe " + game->getCurrentRoom()->getEnemy()->getName() + " disappeared after this epic win and you will lose some health. Watch out the next time."),
+        QMessageBox::warning(this, QString::fromStdString("Defeted"), QString::fromStdString("You have been defeated by the " + game->getCurrentRoom()->getEnemy()->getName() + "!\nThe " + game->getCurrentRoom()->getEnemy()->getName() + " disappeared after this epic win and you will lose some of your items. Watch out the next time."),
                                         QMessageBox::Ok);
+        for(int i = 0; i < game->getPlayer()->numberOfCarriedItems(); i++)
+        {
+            game->getPlayer()->removeItem(i);
+        }
         cleanUp();
     }
 }

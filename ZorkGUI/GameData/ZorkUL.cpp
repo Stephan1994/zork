@@ -36,20 +36,24 @@ void ZorkUL::createRooms()
             //add knives
             if((rand() % 10) == 0)
             {
-                Item *it = new Item("knife", ":/GameView\\pictures\\knife.png", 10);
+                Item *it = new Item("Knife", ":/GameView\\pictures\\knife.png", 10);
                 rooms[i][j]->addItem(it);
             }
 
-            if(rooms[i][j]->getNumberofItems() == 0){
+            if(rooms[i][j]->getNumberofItems() == 0 && (rand() % 20 == 0)){
                 Item *it = new Item("Sword", ":/GameView\\pictures\\sword.png", 20);
                 rooms[i][j]->addItem(it);
             }
 
-            if(rooms[i][j]->getNumberofItems() == 0){
+            if(rooms[i][j]->getNumberofItems() == 0 && (rand() % 25 == 0)){
                 Item *it = new Item("Lantern", ":/GameView\\pictures\\Lantern.png", 8 , false, true);
                 rooms[i][j]->addItem(it);
             }
 
+            if(rooms[i][j]->getNumberofItems() == 0 && (rand() % 25 == 0)){
+                Item *it = new Item("Teleporter", ":/GameView\\pictures\\Teleporter", 0 , false, true);
+                rooms[i][j]->addItem(it);
+            }
             //add ghosts
             if(!rooms[i][j]->enemyAvailable() && (rand() % 20) == 0)
             {
@@ -57,13 +61,13 @@ void ZorkUL::createRooms()
                 rooms[i][j]->setEnemy(en);
             }
 
-            if(!rooms[i][j]->enemyAvailable()&& (rand() %) ==0)
+            if(!rooms[i][j]->enemyAvailable()&& (rand() % 25) == 0)
             {
                 Enemy *en = new Enemy("Goblin", ":/GameView\\pictures\\Goblin image.png","","Sword");
                 rooms[i][j]->setEnemy(en);
             }
 
-            if(!rooms[i][j]->enemyAvailable() && (rand() %) ==0)
+            if(!rooms[i][j]->enemyAvailable() && (rand() % 25) == 0)
             {
                 Enemy *en = new Enemy("Thief", ":GameView\\pictures\\Thief image.png","","Knife");
                 rooms[i][j]->setEnemy(en);
@@ -161,7 +165,7 @@ void ZorkUL::createRooms()
     }
 
     //add 10 quest items
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 12; i++)
     {
         int randRow, randCol;
         do{
@@ -233,8 +237,9 @@ void ZorkUL::teleport(Command com){
         unsigned int randRoomJ = rand() % maxRoomsCol;
         currentRoom = rooms[randRoomI][randRoomJ];
     }
-   guiOutput = currentRoom->longDescription();
-   guiOutput += "\n";
+    guiOutput += "----------------------------\n";
+    guiOutput += currentRoom->longDescription();
+    guiOutput += "\n";
 }
 
 /** GET/SET **/

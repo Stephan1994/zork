@@ -40,6 +40,9 @@
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="1" column="1">
         <widget class="QPushButton" name="teleportButton">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="text">
           <string>Teleport</string>
          </property>
@@ -54,8 +57,20 @@
        </item>
        <item row="1" column="2">
         <widget class="QPushButton" name="eastButton">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="text">
           <string>Go east</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+         <property name="default">
+          <bool>false</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
          </property>
         </widget>
        </item>

@@ -19,6 +19,8 @@ string Item::getStory()
         out += "It's one of these epic golden coins!! Pick it up quickly before someone else comes.";
     else
         out += "Looks like it is a " + name + ". Pick it up, it could come in handy.";
+
+    return out;
 }
 
 string Item::getPicturePath() const

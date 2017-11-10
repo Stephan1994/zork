@@ -19,5 +19,6 @@
         <file>GameView/pictures/Lantern.png</file>
         <file>GameView/pictures/sword.png</file>
         <file>GameView/pictures/Thief image.png</file>
+        <file>GameView/pictures/Teleporter.png</file>
     </qresource>
 </RCC>

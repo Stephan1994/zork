@@ -15,7 +15,7 @@ class ZorkUL {
 private:
     Room *currentRoom;
     Player *player;
-    Room *rooms[20][20];
+    Room *rooms[10][10];
     int maxRoomsRow;
     int maxRoomsCol;
 
