@@ -22,11 +22,9 @@ public:
 protected:
     void paintEvent(QPaintEvent *e);
 private:
-    //Ui::MapWidget *ui;
     QGridLayout *mainGrid;
     vector<vector<Room*>> rooms;
     int visibilityRange;
-    //void createRooms(Room *rooms[9], RoomPainter *paintedRooms[9]);
 };
 
 #endif // MAPWIDGET_H

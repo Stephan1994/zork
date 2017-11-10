@@ -1,32 +1,51 @@
 #include "item.h"
 
-Item::Item(string inDescription, string path, int damage,  bool quest, bool usable) {
-    this->description = inDescription;
+Item::Item(string name, string path, int damage,  bool quest, bool usable) {
+    this->name = name;
     this->picturePath = path;
     this->questItem = quest;
-    this->isUsable = usable;
+    this->usable = usable;
     this->randPositionX = rand() % 10;
     this->randPositionY = rand() % 10;
     this->damage = damage;
 }
 
-string Item::getPicturePath()
+string Item::getPicturePath() const
 {
     return picturePath;
 }
 
-string Item::getShortDescription()
+string Item::getName() const
 {
-	return description;
+    return name;
 }
 
-string Item::getLongDescription()
+string Item::getLongDescription() const
 {
-	return " item(s), " + description + ".\n";
+    return " item(s), " + name + ".\n";
 }
 
-int Item::getDamage()
+int Item::getDamage() const
 {
     return damage;
 }
 
+int Item::getXPosition() const
+{
+    return randPositionX;
+}
+
+int Item::getYPosition() const
+{
+    return randPositionY;
+}
+
+bool Item::isQuestItem() const
+{
+    return questItem;
+}
+
+bool Item::isUsable() const
+{
+    return usable;
+}

@@ -8,14 +8,16 @@ class Enemy
 {
 public:
     Enemy(string name, string picture, string immunity = "", string weakness = "");
-    string getName();
-    string getPicture();
-    string getImmunity();
-    string getWeakness();
-    string getDescription();
-    int getTimeLimit();
-    int health;
-    bool time;
+    string getName() const;
+    string getPicture() const;
+    string getImmunity() const;
+    string getWeakness() const;
+    string getDescription() const;
+    int getTimeLimit() const;
+    int getHealth() const;
+    void setHealth(int newHealth);
+    bool hasTimeLimit() const;
+
 private:
     string name;
     string picture;
@@ -23,6 +25,8 @@ private:
     int damage;
     string immunity;
     string weakness;
+    int health;
+    bool time;
 };
 
 #endif // ENEMY_H

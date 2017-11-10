@@ -7,31 +7,43 @@
 #include "item.h"
 #include "enemy.h"
 using namespace std;
-using std::vector;
 
 class Room {
 
 private:
 	string description;
 	string exitString();
+    vector<Item*> itemsInRoom;
+    Enemy *enemy;
+    int posRow, posCol;
 
 public:
-    int numberOfItems();
-    int posRow, posCol;
-    map<string, std::tuple<Room*, int>> exits;
-    vector<Item> itemsInRoom;
-    vector<Enemy> enemies;
-
     Room(string description, int row, int col);
+
+    map<string, std::tuple<Room*, int>> exits;
+
+    string shortDescription();
+    string longDescription();
     void setExits(Room *north, int northDoor, Room *east, int eastDoor, Room *south, int southDoor, Room *west, int westDoor);
-	string shortDescription();
-	string longDescription();
-	Room* nextRoom(string direction);
     void addItem(Item *inItem);
-    void addEnemy(Enemy *inEnemy);
+    void removeItem(int index);
+    void removeItem(string name);
+    int getNumberofItems() const;
+    Item* getItemByIndex(int index) const;
+    void setEnemy(Enemy *inEnemy);
+    Enemy* getEnemy() const;
+    void enemyDefeated();
+    bool enemyAvailable() const;
+    void setRoomPosition(int x, int y);
+    int getRoomRow() const;
+    int getRoomCol() const;
+
+
+    Room* nextRoom(string direction);
+
+    //depricated
     string displayItem();
     int isItemInRoom(string inString);
-    void removeItemFromRoom(int location);
 };
 
 #endif

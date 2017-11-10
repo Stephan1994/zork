@@ -17,6 +17,9 @@ ItemWidget::ItemWidget(Player *character, QWidget *parent) :
 
 void ItemWidget::paintEvent(QPaintEvent *e)
 {
+    //ignore unused parameter
+    (void)e;
+
     QPainter painter( this );
     painter.setRenderHint( QPainter::Antialiasing, true );
     painter.setPen( QPen( Qt::black, 2 ) );
@@ -35,9 +38,8 @@ void ItemWidget::paintEvent(QPaintEvent *e)
     QRect coinRect = QRect(startX + itemSquareSize, startY - (itemSquareSize + itemSquareSize / 3), itemSquareSize, itemSquareSize);
     painter.drawImage(coinRect, QImage(":/GameView\\pictures\\coin.png"));
 
-    //draw counter text
-
-    QString counterText = QString::fromStdString("x" + to_string(player->carriedQuestItems.size()));
+    //draw quest item counter text
+    QString counterText = QString::fromStdString("x" + to_string(player->numberOfCarriedQuestItems()));
     float factor = itemSquareSize / painter.fontMetrics().height();
     if ((factor < 1) || (factor > 1.25))
     {
@@ -50,17 +52,17 @@ void ItemWidget::paintEvent(QPaintEvent *e)
 
     int rectX = startX;
     int rectY = startY;
-    for (unsigned int i = 0; i < 6; i++)
+    for (int i = 0; i < 6; i++)
     {
         //draw background
         QRect iconBackgroundRect = QRect(rectX, rectY, itemSquareSize, itemSquareSize);
         painter.drawImage(iconBackgroundRect, QImage(":/GameView\\pictures\\item-embedded.png"));
 
         //draw items
-        if (player->carriedItems.size() > i)
+        if (player->numberOfCarriedItems() > i)
         {
             QRect itemRect = QRect(rectX + itemSquareSize / 7, rectY + itemSquareSize / 7, itemSquareSize - itemSquareSize / 3.5, itemSquareSize - itemSquareSize / 3.5);
-            painter.drawImage(itemRect, QImage(QString::fromStdString(player->carriedItems[i].getPicturePath())));
+            painter.drawImage(itemRect, QImage(QString::fromStdString(player->getItemByIndex(i)->getPicturePath())));
         }
         rectX += itemSquareSize + itemSquareSize / 2;
         if (i == 2)
@@ -81,12 +83,12 @@ bool ItemWidget::event( QEvent *event )
     int rectX = startX;
     int rectY = startY;
     string tooltip = "";
-    for (unsigned int i = 0; i < player->carriedItems.size(); i++)
+    for (int i = 0; i < player->numberOfCarriedItems(); i++)
     {
         QRect iconBackgroundRect = QRect(rectX, rectY, itemSquareSize, itemSquareSize);
         if(iconBackgroundRect.contains(helpEvent->pos()))
         {
-            tooltip = player->carriedItems[i].getLongDescription();
+            tooltip = player->getItemByIndex(i)->getLongDescription();
             break;
         }
 
@@ -108,18 +110,17 @@ bool ItemWidget::event( QEvent *event )
           int rectX = startX;
           int rectY = startY;
           string tooltip = "";
-          for (unsigned int i = 0; i < player->carriedItems.size(); i++)
+          for (int i = 0; i < player->numberOfCarriedItems(); i++)
           {
               QRect iconBackgroundRect = QRect(rectX, rectY, itemSquareSize, itemSquareSize);
               if(iconBackgroundRect.contains(mouseEvent->pos()))
               {
                   QMessageBox::StandardButton reply;
-                  reply = QMessageBox::warning(this, QString::fromStdString("Delete item"), QString::fromStdString("Do you really want to delete this " + player->carriedItems[i].getShortDescription() + "?\nYou will lose it in the dark."),
+                  reply = QMessageBox::warning(this, QString::fromStdString("Delete item"), QString::fromStdString("Do you really want to delete this " + player->getItemByIndex(i)->getName() + "?\nYou will lose it in the dark."),
                                                   QMessageBox::Yes|QMessageBox::No);
                   if (reply == QMessageBox::Yes)
                   {
-                      vector<Item>::iterator itemToDeleted = player->carriedItems.begin() + i;
-                      player->carriedItems.erase(itemToDeleted);
+                      player->removeItem(i);
                       static_cast<MainWindow*>(this->parent()->parent())->playerChanged();
                   }
                   break;

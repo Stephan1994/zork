@@ -34,10 +34,10 @@ void ZorkUL::createRooms()
             }
 
             //add ghosts
-            if((rand() % 20) == 0)
+            if(!rooms[i][j]->enemyAvailable() && (rand() % 20) == 0)
             {
                 Enemy *en = new Enemy("ghost", ":/GameView\\pictures\\ghost.jpg");
-                rooms[i][j]->addEnemy(en);
+                rooms[i][j]->setEnemy(en);
             }
 
         }
@@ -139,11 +139,9 @@ void ZorkUL::createRooms()
             randRow = rand() % maxRoomsRow;
             randCol = rand() % maxRoomsCol;
         }
-        while(!rooms[randRow][randCol]->itemsInRoom.empty());
+        while(rooms[randRow][randCol]->getNumberofItems() != 0);
 
         Item *it = new Item("coin", ":/GameView\\pictures\\coin.png", 0, true, false);
-        it->randPositionX = rand() % 10;
-        it->randPositionY = rand() % 10;
         rooms[randRow][randCol]->addItem(it);
     }
 
@@ -269,7 +267,7 @@ bool ZorkUL::processCommand(Command command) {
 /** COMMANDS **/
 void ZorkUL::printHelp() {
 	cout << "valid inputs are; " << endl;
-	parser.showCommands();
+    //parser.showCommands();
 
 }
 

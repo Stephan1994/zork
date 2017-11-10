@@ -15,12 +15,12 @@ Enemy::Enemy(string name, string picture, string immunity, string weakness)
     this->weakness = weakness;
 }
 
-string Enemy::getName()
+string Enemy::getName() const
 {
     return name;
 }
 
-string Enemy::getDescription()
+string Enemy::getDescription() const
 {
     string out = name + "\nHealth: " + to_string(health) + "\nDamage: " + to_string(damage);
     if (immunity != "")
@@ -30,22 +30,40 @@ string Enemy::getDescription()
     return out;
 }
 
-string Enemy::getPicture()
+string Enemy::getPicture() const
 {
     return picture;
 }
 
-string Enemy::getWeakness()
+string Enemy::getWeakness() const
 {
     return weakness;
 }
 
-string Enemy::getImmunity()
+string Enemy::getImmunity() const
 {
     return immunity;
 }
 
-int Enemy::getTimeLimit()
+int Enemy::getTimeLimit() const
 {
     return timeLimit;
+}
+
+bool Enemy::hasTimeLimit() const
+{
+    return time;
+}
+
+int Enemy::getHealth() const
+{
+    return health;
+}
+
+void Enemy::setHealth(int newHealth)
+{
+    if (newHealth <= 100)
+            this->health = newHealth;
+    else
+        this->health = 100;
 }

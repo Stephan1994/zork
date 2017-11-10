@@ -24,13 +24,13 @@ void MapWidget::changeRooms(ZorkUL *zork, int visRange)
     Room *current = zork->currentRoom;
 
     //get rooms depending on the visibilityRange around the current room
-    int rowStart = current->posRow - visibilityRange;
+    int rowStart = current->getRoomRow() - visibilityRange;
     while(rowStart < 0){rowStart++;};
-    int rowEnd = current->posRow + visibilityRange;
+    int rowEnd = current->getRoomRow() + visibilityRange;
     while(rowEnd > (zork->maxRoomsRow - 1)){rowEnd--;};
-    int colStart = current->posCol - visibilityRange;
+    int colStart = current->getRoomCol() - visibilityRange;
     while(colStart < 0){colStart++;};
-    int colEnd = current->posCol + visibilityRange;
+    int colEnd = current->getRoomCol() + visibilityRange;
     while(colEnd > zork->maxRoomsCol - 1){colEnd--;};
 
     //add rooms to widgets rooms vector
@@ -38,7 +38,7 @@ void MapWidget::changeRooms(ZorkUL *zork, int visRange)
     {
         for(int j = colStart; j <= colEnd; j++)
         {
-            rooms[i - (current->posRow - visibilityRange)][j - (current->posCol - visibilityRange)] = zork->rooms[i][j];
+            rooms[i - (current->getRoomRow() - visibilityRange)][j - (current->getRoomCol() - visibilityRange)] = zork->rooms[i][j];
         }
     }
     this->update();
@@ -46,12 +46,13 @@ void MapWidget::changeRooms(ZorkUL *zork, int visRange)
 
 MapWidget::~MapWidget()
 {
-    //delete ui;
-    //delete mainGrid;
 }
 
 void MapWidget::paintEvent(QPaintEvent *e)
 {
+    //ignore unused variable
+    (void)e;
+
     QPainter painter( this );
     painter.setRenderHint( QPainter::Antialiasing, true );
     painter.setPen( QPen( Qt::black, 2 ) );
@@ -80,17 +81,18 @@ void MapWidget::paintEvent(QPaintEvent *e)
                 };
 
                 //draw items
-                if (!rooms[row][col]->itemsInRoom.empty())
+                if (rooms[row][col]->getNumberofItems() != 0)
                 {
-                    for(std::vector<Item>::iterator it = rooms[row][col]->itemsInRoom.begin(); it != rooms[row][col]->itemsInRoom.end(); ++it)
+                    for( int i = 0; i < rooms[row][col]->getNumberofItems(); i++) //std::vector<Item>::iterator it = rooms[row][col]->itemsInRoom.begin(); it != rooms[row][col]->itemsInRoom.end(); ++it)
                     {
+                        Item *it = rooms[row][col]->getItemByIndex(i);
                         int playerPosX = p[0].x() + (roomLength / 2) - (roomLength / 12);
                         int playerPosY = p[0].y() + (roomLength / 2) - (roomLength / 12);
 
                         //calculate random upper left corner of item in room
                         //ten possible slots in width and height
-                        int posX = p[0].x() + it->randPositionX * (roomLength/10) - (it->randPositionX / 9 * (roomLength/6));
-                        int posY = p[0].y() + it->randPositionY * (roomLength/10) - (it->randPositionY / 9 * (roomLength/6));
+                        int posX = p[0].x() + it->getXPosition() * (roomLength/10) - (it->getXPosition() / 9 * (roomLength/6));
+                        int posY = p[0].y() + it->getYPosition() * (roomLength/10) - (it->getYPosition() / 9 * (roomLength/6));
                         if(posX > playerPosX - roomLength/6 && posX < playerPosX + roomLength/6 && posY > playerPosY - roomLength/6 && posY < playerPosY + roomLength/6)
                         {
                             posX += roomLength/3;

@@ -44,6 +44,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
+    (void)event;
     if(this)
     {
         updateOutputLabel(zork->guiOutput);
@@ -54,13 +55,13 @@ void MainWindow::updateOutputLabel(string out)
 {
     ui->storyText->setText(QString::fromStdString(out));
     QImage roomPic;
-    if (!zork->currentRoom->enemies.empty())
+    if (zork->currentRoom->enemyAvailable())
     {
-        roomPic = QImage(QString::fromStdString(zork->currentRoom->enemies.front().getPicture()));
+        roomPic = QImage(QString::fromStdString(zork->currentRoom->getEnemy()->getPicture()));
     }
-    else if (!zork->currentRoom->itemsInRoom.empty())
+    else if (zork->currentRoom->getNumberofItems() > 0)
     {
-        roomPic = QImage(QString::fromStdString(zork->currentRoom->itemsInRoom.front().getPicturePath()));
+        roomPic = QImage(QString::fromStdString(zork->currentRoom->getItemByIndex(0)->getPicturePath()));
     }
     else
     {
@@ -68,7 +69,6 @@ void MainWindow::updateOutputLabel(string out)
     }
 
     ui->storyPic->setPixmap(QPixmap::fromImage(roomPic).scaled(ui->storyPic->width(), ui->storyPic->height(), Qt::KeepAspectRatio));
-    //ui->storyPic->setMaximumSize(250,250);
 }
 
 void MainWindow::roomChanged()
@@ -79,7 +79,7 @@ void MainWindow::roomChanged()
     actions->changeActions();
 
     //set movement buttons enabled or disabled
-    if (!zork->currentRoom->enemies.empty())
+    if (zork->currentRoom->enemyAvailable())
     {
         ui->northButton->setEnabled(false);
         ui->northButton->setToolTip(QString::fromStdString("You can't move while attacked."));
@@ -143,7 +143,7 @@ void MainWindow::roomChanged()
         }
 
         //teleport
-        if (!zork->currentRoom->itemsInRoom.empty() && zork->currentRoom->itemsInRoom.front().getShortDescription() == "Laterne")
+        if (zork->currentRoom->getNumberofItems() != 0 && zork->currentRoom->getItemByIndex(0)->getName() == "Teleporter")
         {
             ui->teleportButton->setEnabled(true);
             ui->teleportButton->setToolTip(QString::fromStdString("Teleport to a random room."));
@@ -158,7 +158,7 @@ void MainWindow::roomChanged()
 
 void MainWindow::playerChanged()
 {
-    if (zork->player->carriedItems.size() == 6)
+    if (zork->player->numberOfCarriedItems() == 6)
         actions->enableTakeItem(false, "You cannot carry more than six items.\nYou can throw items away by rightclicking on them.");
     else
         actions->enableTakeItem(true, "Pick up item.");

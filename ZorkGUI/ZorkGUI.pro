@@ -25,11 +25,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     GameData\main.cpp \
-    GameData\Character.cpp \
     GameData\Command.cpp \
     GameData\CommandWords.cpp \
     GameData\item.cpp \
-    GameData\Parser.cpp \
     GameData\Room.cpp \
     GameData\ZorkUL.cpp \
     GameData\player.cpp \
@@ -40,11 +38,9 @@ SOURCES += \
     GameView/actionswidget.cpp
 
 HEADERS += \
-    GameData\Character.h \
     GameData\Command.h \
     GameData\CommandWords.h \
     GameData\item.h \
-    GameData\Parser.h \
     GameData\Room.h \
     GameData\ZorkUL.h \
     GameData\player.h \
