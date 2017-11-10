@@ -21,10 +21,6 @@ private:
 
 	void createRooms();
 	void printWelcome();
-	bool processCommand(Command command);
-	void printHelp();
-    void createItems();
-    void displayItems();
 
 public:
     string guiOutput;

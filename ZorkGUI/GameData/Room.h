@@ -20,6 +20,7 @@ private:
 
 public:
     Room(string description, int row, int col);
+    ~Room();
 
     string shortDescription();
     string longDescription();

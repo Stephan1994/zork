@@ -5,6 +5,14 @@ Player::Player(string description)
     this->description = description;
 }
 
+Player::~Player()
+{
+    for (std::vector<Item*>::iterator it = carriedItems.begin(); it != carriedItems.end(); ++it){
+        delete *it;
+    }
+    carriedItems.clear();
+}
+
 void Player::addItem(Item *item)
 {
     carriedItems.push_back(item);

@@ -9,6 +9,17 @@ Room::Room(string description, int row, int col) {
     this->enemy = NULL;
 }
 
+Room::~Room()
+{
+    if (enemy != NULL)
+        delete enemy;
+
+    for (std::vector<Item*>::iterator it = itemsInRoom.begin(); it != itemsInRoom.end(); ++it){
+        delete *it;
+    }
+    itemsInRoom.clear();
+}
+
 void Room::setExits(Room *north, int northDoor, Room *east, int eastDoor, Room *south, int southDoor, Room *west, int westDoor) {
 	if (north != NULL)
         exits["north"] = make_tuple(north, northDoor);

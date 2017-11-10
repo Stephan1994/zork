@@ -14,6 +14,7 @@ private:
     vector <Item*> carriedItems;
 public:
     Player(string description);
+    ~Player();
     void addItem(Item *item);
     void removeItem(int index);
     void removeItem(string name);
