@@ -49,7 +49,7 @@ string Room::longDescription() {
         if (rand() % 20 == 0)
             out += "Who would even wanna live in this house?! There are so many empty rooms!\n";
         if (rand() % 20 == 0)
-            out += "I can't wait to take a bath when i get out of here.";
+            out += "I can't wait to take a bath when i get out of here.\n";
     }
     else if (enemy != NULL)
     {

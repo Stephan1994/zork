@@ -40,10 +40,32 @@ void ZorkUL::createRooms()
                 rooms[i][j]->addItem(it);
             }
 
+            if(rooms[i][j]->getNumberofItems() == 0){
+                Item *it = new Item("Sword", ":/GameView\\pictures\\sword.png", 20);
+                rooms[i][j]->addItem(it);
+            }
+
+            if(rooms[i][j]->getNumberofItems() == 0){
+                Item *it = new Item("Lantern", ":/GameView\\pictures\\Lantern.png", 8 , false, true);
+                rooms[i][j]->addItem(it);
+            }
+
             //add ghosts
             if(!rooms[i][j]->enemyAvailable() && (rand() % 20) == 0)
             {
-                Enemy *en = new Enemy("ghost", ":/GameView\\pictures\\ghost.jpg");
+                Enemy *en = new Enemy("ghost", ":/GameView\\pictures\\ghost.jpg","Sword", "Lantern");
+                rooms[i][j]->setEnemy(en);
+            }
+
+            if(!rooms[i][j]->enemyAvailable()&& (rand() %) ==0)
+            {
+                Enemy *en = new Enemy("Goblin", ":/GameView\\pictures\\Goblin image.png","","Sword");
+                rooms[i][j]->setEnemy(en);
+            }
+
+            if(!rooms[i][j]->enemyAvailable() && (rand() %) ==0)
+            {
+                Enemy *en = new Enemy("Thief", ":GameView\\pictures\\Thief image.png","","Knife");
                 rooms[i][j]->setEnemy(en);
             }
 

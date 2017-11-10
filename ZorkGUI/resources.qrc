@@ -12,5 +12,12 @@
         <file>GameView/pictures/room.jpg</file>
         <file>GameView/pictures/scroll.png</file>
         <file>GameView/pictures/zork_icon.png</file>
+        <file>GameView/pictures/diamond.png</file>
+        <file>GameView/pictures/garlic-icon.png</file>
+        <file>GameView/pictures/Goblin image.png</file>
+        <file>GameView/pictures/key.png</file>
+        <file>GameView/pictures/Lantern.png</file>
+        <file>GameView/pictures/sword.png</file>
+        <file>GameView/pictures/Thief image.png</file>
     </qresource>
 </RCC>
