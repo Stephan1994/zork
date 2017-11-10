@@ -95,7 +95,7 @@ void MainWindow::roomChanged()
     else
     {
         //north
-        if (zork->currentRoom->exits.find("north")!= zork->currentRoom->exits.end())
+        if (zork->currentRoom->hasExit("north"))
         {
             ui->northButton->setEnabled(true);
             ui->northButton->setToolTip(QString::fromStdString("You will go to the next room in this direction."));
@@ -107,7 +107,7 @@ void MainWindow::roomChanged()
         }
 
         //south
-        if (zork->currentRoom->exits.find("south")!= zork->currentRoom->exits.end())
+        if (zork->currentRoom->hasExit("south"))
         {
             ui->southButton->setEnabled(true);
             ui->southButton->setToolTip(QString::fromStdString("You will go to the next room in this direction."));
@@ -119,7 +119,7 @@ void MainWindow::roomChanged()
         }
 
         //west
-        if (zork->currentRoom->exits.find("west")!= zork->currentRoom->exits.end())
+        if (zork->currentRoom->hasExit("west"))
         {
             ui->westButton->setEnabled(true);
             ui->westButton->setToolTip(QString::fromStdString("You will go to the next room in this direction."));
@@ -131,7 +131,7 @@ void MainWindow::roomChanged()
         }
 
         //east
-        if (zork->currentRoom->exits.find("east")!= zork->currentRoom->exits.end())
+        if (zork->currentRoom->hasExit("east"))
         {
             ui->eastButton->setEnabled(true);
             ui->eastButton->setToolTip(QString::fromStdString("You will go to the next room in this direction."));

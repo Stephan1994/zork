@@ -88,11 +88,6 @@ Item* Room::getItemByIndex(int index) const
         return NULL;
 }
 
-/*
-void Room::addEnemy(Enemy *inEnemy){
-    enemies.push_back(*inEnemy);
-}*/
-
 bool Room::enemyAvailable() const
 {
     return (enemy != NULL);
@@ -126,6 +121,28 @@ int Room::getRoomRow() const
 int Room::getRoomCol() const
 {
     return posCol;
+}
+
+int Room::getNumberofExits() const
+{
+    return exits.size();
+}
+
+bool Room::hasExit(string direction) const
+{
+    return (exits.find(direction) != exits.end());
+}
+
+Room* Room::getNextRoom(string direction) const
+{
+    if (hasExit(direction))
+        return get<0>(exits.find(direction)->second);
+    else
+        return NULL;
+}
+int Room::getDoorPosition(string direction) const
+{
+    return get<1>(exits.find(direction)->second);
 }
 
 string Room::displayItem() {

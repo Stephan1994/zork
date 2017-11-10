@@ -150,7 +150,7 @@ void ActionsWidget::on_attackButton_clicked()
                 string directions[4] = {"north", "south", "west", "east"};
                 for (int i = 0; i < 4; i++)
                 {
-                    if (game->currentRoom->exits.find(directions[i]) != game->currentRoom->exits.end())
+                    if (game->currentRoom->hasExit(directions[i]))
                     {
                         Command command = Command("go", directions[i]);
                         game->goRoom(command);

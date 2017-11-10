@@ -51,7 +51,7 @@ void ZorkUL::createRooms()
             Room *exitsArray[4];
             int falseCounter;
             do{
-                falseCounter = - rooms[i][j]->exits.size();
+                falseCounter = - rooms[i][j]->getNumberofExits();
                 for (int k=0; k<4; k++)
                 {
                     //doors are randomly generated
@@ -64,7 +64,7 @@ void ZorkUL::createRooms()
                     {
                         //north
                         if (k == 0){
-                            if (i-1 >= 0 && rooms[i][j]->exits.find("north") == rooms[i][j]->exits.end())
+                            if (i-1 >= 0 && !rooms[i][j]->hasExit("north"))
                                 exitsArray[k] = rooms[i-1][j];
                             else{
                                 exitsArray[k] = NULL;
@@ -73,7 +73,7 @@ void ZorkUL::createRooms()
                         }
                         //east
                         else if (k == 1){
-                            if (j+1 < maxRoomsCol && rooms[i][j]->exits.find("east") == rooms[i][j]->exits.end())
+                            if (j+1 < maxRoomsCol && !rooms[i][j]->hasExit("east"))
                                 exitsArray[k] = rooms[i][j+1];
                             else{
                                 exitsArray[k] = NULL;
@@ -82,7 +82,7 @@ void ZorkUL::createRooms()
                         }
                         //south
                         else if (k == 2){
-                            if (i+1 < maxRoomsRow && rooms[i][j]->exits.find("south") == rooms[i][j]->exits.end())
+                            if (i+1 < maxRoomsRow && !rooms[i][j]->hasExit("south"))
                                 exitsArray[k] = rooms[i+1][j];
                             else{
                                 exitsArray[k] = NULL;
@@ -91,7 +91,7 @@ void ZorkUL::createRooms()
                         }
                         //west
                         else if (k == 3){
-                            if (j-1 >= 0 && rooms[i][j]->exits.find("west") == rooms[i][j]->exits.end())
+                            if (j-1 >= 0 && !rooms[i][j]->hasExit("west"))
                                 exitsArray[k] = rooms[i][j-1];
                             else{
                                 exitsArray[k] = NULL;
