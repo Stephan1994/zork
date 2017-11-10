@@ -21,24 +21,24 @@ void MapWidget::changeRooms(ZorkUL *zork, int visRange)
         rooms[i].resize(visibilityRange * 2 + 1, NULL);
     }
 
-    Room *current = zork->currentRoom;
+    Room *current = zork->getCurrentRoom();
 
     //get rooms depending on the visibilityRange around the current room
     int rowStart = current->getRoomRow() - visibilityRange;
     while(rowStart < 0){rowStart++;};
     int rowEnd = current->getRoomRow() + visibilityRange;
-    while(rowEnd > (zork->maxRoomsRow - 1)){rowEnd--;};
+    while(rowEnd > (zork->getMaxRoomsRow() - 1)){rowEnd--;};
     int colStart = current->getRoomCol() - visibilityRange;
     while(colStart < 0){colStart++;};
     int colEnd = current->getRoomCol() + visibilityRange;
-    while(colEnd > zork->maxRoomsCol - 1){colEnd--;};
+    while(colEnd > zork->getMaxRoomsCol() - 1){colEnd--;};
 
     //add rooms to widgets rooms vector
     for (int i=rowStart; i <= rowEnd; i++)
     {
         for(int j = colStart; j <= colEnd; j++)
         {
-            rooms[i - (current->getRoomRow() - visibilityRange)][j - (current->getRoomCol() - visibilityRange)] = zork->rooms[i][j];
+            rooms[i - (current->getRoomRow() - visibilityRange)][j - (current->getRoomCol() - visibilityRange)] = zork->getRoom(i, j);
         }
     }
     this->update();

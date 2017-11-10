@@ -14,7 +14,7 @@ ZorkUL::ZorkUL(int roomsRow, int roomsCol)
 
 ZorkUL::~ZorkUL()
 {
-    //delete charac;
+    delete player;
 }
 
 void ZorkUL::createRooms()
@@ -327,4 +327,29 @@ void ZorkUL::teleport(Command com){
     }*/
    guiOutput = currentRoom->longDescription();
    guiOutput += "\n";
+}
+/*
+Room* ZorkUL::getCurrentRoom() const
+{
+    return currentRoom;
+}
+
+Player* ZorkUL::getPlayer() const
+{
+    return player;
+}
+*/
+Room* ZorkUL::getRoom(int row, int col) const
+{
+   return rooms[row][col];
+}
+
+int ZorkUL::getMaxRoomsRow() const
+{
+    return maxRoomsRow;
+}
+
+int ZorkUL::getMaxRoomsCol() const
+{
+    return maxRoomsCol;
 }

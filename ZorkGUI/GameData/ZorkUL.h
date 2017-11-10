@@ -13,6 +13,12 @@ using namespace std;
 
 class ZorkUL {
 private:
+    Room *currentRoom;
+    Player *player;
+    Room *rooms[50][50];
+    int maxRoomsRow;
+    int maxRoomsCol;
+
 	void createRooms();
 	void printWelcome();
 	bool processCommand(Command command);
@@ -22,18 +28,24 @@ private:
 
 public:
     string guiOutput;
-    Room *currentRoom;
-    Player *player;
-    //Character *charac;
-    Room *rooms[50][50];
-    int maxRoomsRow;
-    int maxRoomsCol;
     ZorkUL(int roomsRow, int roomsCol);
     ~ZorkUL();
 	void play();
 	string go(string direction);
     void teleport(Command com);
     void goRoom(Command command);
+
+    inline Room* getCurrentRoom() const
+    {
+        return currentRoom;
+    }
+    inline Player* getPlayer() const
+    {
+        return player;
+    }
+    Room* getRoom(int row, int col) const;
+    int getMaxRoomsRow() const;
+    int getMaxRoomsCol() const;
 };
 
 #endif /*ZORKUL_H_*/

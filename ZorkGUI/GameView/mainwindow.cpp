@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->gridLayout->addWidget(map, 1, 2, 2, 2);
 
     //add ItemWidget
-    items = new ItemWidget(zork->player, this);
+    items = new ItemWidget(zork->getPlayer(), this);
     items->setMinimumSize(150,150);
     ui->gridLayout->addWidget(items,0,3);
 
@@ -55,13 +55,13 @@ void MainWindow::updateOutputLabel(string out)
 {
     ui->storyText->setText(QString::fromStdString(out));
     QImage roomPic;
-    if (zork->currentRoom->enemyAvailable())
+    if (zork->getCurrentRoom()->enemyAvailable())
     {
-        roomPic = QImage(QString::fromStdString(zork->currentRoom->getEnemy()->getPicture()));
+        roomPic = QImage(QString::fromStdString(zork->getCurrentRoom()->getEnemy()->getPicture()));
     }
-    else if (zork->currentRoom->getNumberofItems() > 0)
+    else if (zork->getCurrentRoom()->getNumberofItems() > 0)
     {
-        roomPic = QImage(QString::fromStdString(zork->currentRoom->getItemByIndex(0)->getPicturePath()));
+        roomPic = QImage(QString::fromStdString(zork->getCurrentRoom()->getItemByIndex(0)->getPicturePath()));
     }
     else
     {
@@ -79,7 +79,7 @@ void MainWindow::roomChanged()
     actions->changeActions();
 
     //set movement buttons enabled or disabled
-    if (zork->currentRoom->enemyAvailable())
+    if (zork->getCurrentRoom()->enemyAvailable())
     {
         ui->northButton->setEnabled(false);
         ui->northButton->setToolTip(QString::fromStdString("You can't move while attacked."));
@@ -95,7 +95,7 @@ void MainWindow::roomChanged()
     else
     {
         //north
-        if (zork->currentRoom->hasExit("north"))
+        if (zork->getCurrentRoom()->hasExit("north"))
         {
             ui->northButton->setEnabled(true);
             ui->northButton->setToolTip(QString::fromStdString("You will go to the next room in this direction."));
@@ -107,7 +107,7 @@ void MainWindow::roomChanged()
         }
 
         //south
-        if (zork->currentRoom->hasExit("south"))
+        if (zork->getCurrentRoom()->hasExit("south"))
         {
             ui->southButton->setEnabled(true);
             ui->southButton->setToolTip(QString::fromStdString("You will go to the next room in this direction."));
@@ -119,7 +119,7 @@ void MainWindow::roomChanged()
         }
 
         //west
-        if (zork->currentRoom->hasExit("west"))
+        if (zork->getCurrentRoom()->hasExit("west"))
         {
             ui->westButton->setEnabled(true);
             ui->westButton->setToolTip(QString::fromStdString("You will go to the next room in this direction."));
@@ -131,7 +131,7 @@ void MainWindow::roomChanged()
         }
 
         //east
-        if (zork->currentRoom->hasExit("east"))
+        if (zork->getCurrentRoom()->hasExit("east"))
         {
             ui->eastButton->setEnabled(true);
             ui->eastButton->setToolTip(QString::fromStdString("You will go to the next room in this direction."));
@@ -143,7 +143,7 @@ void MainWindow::roomChanged()
         }
 
         //teleport
-        if (zork->currentRoom->getNumberofItems() != 0 && zork->currentRoom->getItemByIndex(0)->getName() == "Teleporter")
+        if (zork->getCurrentRoom()->getNumberofItems() != 0 && zork->getCurrentRoom()->getItemByIndex(0)->getName() == "Teleporter")
         {
             ui->teleportButton->setEnabled(true);
             ui->teleportButton->setToolTip(QString::fromStdString("Teleport to a random room."));
@@ -158,7 +158,7 @@ void MainWindow::roomChanged()
 
 void MainWindow::playerChanged()
 {
-    if (zork->player->numberOfCarriedItems() == 6)
+    if (zork->getPlayer()->numberOfCarriedItems() == 6)
         actions->enableTakeItem(false, "You cannot carry more than six items.\nYou can throw items away by rightclicking on them.");
     else
         actions->enableTakeItem(true, "Pick up item.");
