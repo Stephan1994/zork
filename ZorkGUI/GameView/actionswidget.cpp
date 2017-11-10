@@ -7,13 +7,20 @@ ActionsWidget::ActionsWidget(ZorkUL *zork, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ActionsWidget)
 {
+    //setup ui form
     ui->setupUi(this);
+    //give ids to standard radiobuttons
     ui->buttonGroup->setId(ui->radioButton, 0);
     ui->buttonGroup->setId(ui->radioButton_2, 1);
+
     game = zork;
+
+    //init timer for enemies
     answerTimer = new QTimer();
     answerTimer->setInterval(1000);
     connect(answerTimer, SIGNAL(timeout()), this, SLOT(timeout()));
+
+    //start by creating first actionsview for the current room
     changeActions();
 }
 
@@ -55,8 +62,6 @@ void ActionsWidget::changeActions()
         ui->enemyHealth->setValue(game->currentRoom->enemies.front().health);
 
         //set Answers
-        int radioSize = radioButtons.size();
-        int itemSize = game->player->carriedItems.size();
         if(!game->player->carriedItems.empty() && radioButtons.size() < game->player->carriedItems.size())
         {
             int buttonID = 2;
@@ -97,14 +102,17 @@ void ActionsWidget::changeActions()
     }
 }
 
+//enables/disables the takeItemButton and sets tooltip
 void ActionsWidget::enableTakeItem(bool en, string tooltip)
 {
     ui->takeItemButton->setEnabled(en);
     ui->takeItemButton->setToolTip(QString::fromStdString(tooltip));
 }
 
+//slot for ItemButton
 void ActionsWidget::on_takeItemButton_clicked()
 {
+    //take first item in room (only one item possible at the moment)
     vector<Item>::iterator itInRoom = game->currentRoom->itemsInRoom.begin();
     if (itInRoom->questItem)
     {
@@ -119,9 +127,11 @@ void ActionsWidget::on_takeItemButton_clicked()
     static_cast<MainWindow*>(this->parent()->parent())->takeItemButton_clicked();
 }
 
+//attackButton slot
 void ActionsWidget::on_attackButton_clicked()
 {
     map<QRadioButton*, Item*>::iterator item = radioButtons.find((QRadioButton*)ui->buttonGroup->checkedButton());
+    //check if chosen anser needs an item
     if( item != radioButtons.end())
     {
         game->currentRoom->enemies.front().health -= item->second->getDamage();
@@ -134,16 +144,19 @@ void ActionsWidget::on_attackButton_clicked()
         {//run away
             if (rand() % 20 ==0)
             {
-                if (game->currentRoom->exits.find("north") != game->currentRoom->exits.end())
-                    game->go("north");
-                else if (game->currentRoom->exits.find("south") != game->currentRoom->exits.end())
-                    game->go("south");
-                else if (game->currentRoom->exits.find("west") != game->currentRoom->exits.end())
-                    game->go("west");
-                else if (game->currentRoom->exits.find("east") != game->currentRoom->exits.end())
-                    game->go("east");
+                string directions[4] = {"north", "south", "west", "east"};
+                for (int i = 0; i < 4; i++)
+                {
+                    if (game->currentRoom->exits.find(directions[i]) != game->currentRoom->exits.end())
+                    {
+                        Command command = Command("go", directions[i]);
+                        game->goRoom(command);
+                        break;
+                    }
+                }
 
                 static_cast<MainWindow*>(this->parent()->parent())->roomChanged();
+                return;
             }
         }
 
