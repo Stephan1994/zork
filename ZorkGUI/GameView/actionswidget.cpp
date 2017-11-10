@@ -28,6 +28,10 @@ ActionsWidget::~ActionsWidget()
 {
     delete ui;
     delete answerTimer;
+    for(std::map<QRadioButton*, Item*>::iterator itr = radioButtons.begin(); itr != radioButtons.end(); itr++)
+    {
+        delete itr->first;
+    }
 }
 
 void ActionsWidget::changeActions()
@@ -57,7 +61,7 @@ void ActionsWidget::changeActions()
 
         //set health
         ui->enemyName->setText(QString::fromStdString(game->currentRoom->enemies.front().getDescription()));
-        if (ui->enemyHealth->maximum() == 105)
+        if (ui->enemyHealth->maximum() > 100)
             ui->enemyHealth->setMaximum(game->currentRoom->enemies.front().health);
         ui->enemyHealth->setValue(game->currentRoom->enemies.front().health);
 
