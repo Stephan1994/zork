@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QRadioButton>
 #include "GameData/ZorkUL.h"
 
 namespace Ui {
@@ -29,9 +30,11 @@ private slots:
 private:
     Ui::ActionsWidget *ui;
     ZorkUL *game;
-    map<int, Item*> radioButtons;
+    map<QRadioButton*, Item*> radioButtons;
     QTimer *answerTimer;
     int secondCounter;
+
+    void cleanUp();
 };
 
 #endif // ACTIONSWIDGET_H

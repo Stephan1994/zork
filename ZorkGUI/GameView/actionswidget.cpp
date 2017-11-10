@@ -17,6 +17,12 @@ ActionsWidget::ActionsWidget(ZorkUL *zork, QWidget *parent) :
     changeActions();
 }
 
+ActionsWidget::~ActionsWidget()
+{
+    delete ui;
+    delete answerTimer;
+}
+
 void ActionsWidget::changeActions()
 {
     //show or hide itembutton
@@ -49,7 +55,9 @@ void ActionsWidget::changeActions()
         ui->enemyHealth->setValue(game->currentRoom->enemies.front().health);
 
         //set Answers
-        if(!game->player->carriedItems.empty())
+        int radioSize = radioButtons.size();
+        int itemSize = game->player->carriedItems.size();
+        if(!game->player->carriedItems.empty() && radioButtons.size() < game->player->carriedItems.size())
         {
             int buttonID = 2;
             for (int i=0; i < game->player->carriedItems.size(); i++)
@@ -58,11 +66,11 @@ void ActionsWidget::changeActions()
                 {
                     float effectiveness = (game->player->carriedItems[i].getShortDescription() == game->currentRoom->enemies.front().getWeakness()) ? 3 : 1;
                     effectiveness = (game->player->carriedItems[i].getShortDescription() == game->currentRoom->enemies.front().getImmunity()) ? 0.1 : 1;
-                    QString actionText = QString(QString::fromStdString("Use your " + game->player->carriedItems[i].getShortDescription() + "(Dmg:" + to_string((int)(game->player->carriedItems[i].getDamage() * effectiveness)) + ")"));
+                    QString actionText = QString(QString::fromStdString("Use your " + game->player->carriedItems[i].getShortDescription() + " (Dmg:" + to_string((int)(game->player->carriedItems[i].getDamage() * effectiveness)) + ")"));
                     QRadioButton *addedAction = new QRadioButton(actionText);
                     ui->attacksGroup->layout()->addWidget(addedAction);
                     ui->buttonGroup->addButton(addedAction, buttonID);
-                    radioButtons[buttonID] = &(game->player->carriedItems[i]);
+                    radioButtons[addedAction] = &(game->player->carriedItems[i]);
                     buttonID++;
                 }
             }
@@ -95,11 +103,6 @@ void ActionsWidget::enableTakeItem(bool en, string tooltip)
     ui->takeItemButton->setToolTip(QString::fromStdString(tooltip));
 }
 
-ActionsWidget::~ActionsWidget()
-{
-    delete ui;
-}
-
 void ActionsWidget::on_takeItemButton_clicked()
 {
     vector<Item>::iterator itInRoom = game->currentRoom->itemsInRoom.begin();
@@ -118,7 +121,7 @@ void ActionsWidget::on_takeItemButton_clicked()
 
 void ActionsWidget::on_attackButton_clicked()
 {
-    map<int, Item*>::iterator item = radioButtons.find(ui->buttonGroup->checkedId());
+    map<QRadioButton*, Item*>::iterator item = radioButtons.find((QRadioButton*)ui->buttonGroup->checkedButton());
     if( item != radioButtons.end())
     {
         game->currentRoom->enemies.front().health -= item->second->getDamage();
@@ -149,9 +152,7 @@ void ActionsWidget::on_attackButton_clicked()
     if(game->currentRoom->enemies.front().health <= 0)
     {
         answerTimer->stop();
-        ui->enemyHealth->setMaximum(105);
-        game->currentRoom->enemies.erase(game->currentRoom->enemies.begin());
-        static_cast<MainWindow*>(this->parent()->parent())->roomChanged();
+        cleanUp();
     }
     else
         changeActions();
@@ -171,8 +172,20 @@ void ActionsWidget::timeout()
         answerTimer->stop();
         QMessageBox::warning(this, QString::fromStdString("Defeted"), QString::fromStdString("You have been defeated by the " + game->currentRoom->enemies.front().getName() + "!\nThe " + game->currentRoom->enemies.front().getName() + "disappeared after this epic win and you will lose some health. Watch out the next time."),
                                         QMessageBox::Ok);
-        ui->enemyHealth->setMaximum(105);
-        game->currentRoom->enemies.erase(game->currentRoom->enemies.begin());
-        static_cast<MainWindow*>(this->parent()->parent())->roomChanged();
+        cleanUp();
     }
+}
+
+void ActionsWidget::cleanUp()
+{
+    ui->enemyHealth->setMaximum(105);
+    game->currentRoom->enemies.erase(game->currentRoom->enemies.begin());
+    for(std::map<QRadioButton*, Item*>::iterator itr = radioButtons.begin(); itr != radioButtons.end(); itr++)
+    {
+        ui->attacksGroup->layout()->removeWidget(itr->first);
+        ui->buttonGroup->removeButton(itr->first);
+        delete itr->first;
+        radioButtons.erase(itr);
+    }
+    static_cast<MainWindow*>(this->parent()->parent())->roomChanged();
 }
